@@ -1,6 +1,7 @@
-/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/model/Book.java
-/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/resources/BookResource.java
-/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/MyServlet.java
-/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/JakartaRestConfiguration.java
-/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/resources/JakartaEE10Resource.java
-/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/resources/HelloResource.java
+/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/UsersController.java
+/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/model/User.java
+/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/model/BookExample.java
+/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/servlet/UserServlet.java
+/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/servlet/BookExample.java
+/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/MyServletExample.java
+/Users/renxihai/NetBeansProjects/fwrps/src/main/java/com/algonquin/cst8288/fwrps/ApplicationRestConfiguration.java

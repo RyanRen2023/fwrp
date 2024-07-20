@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-final
+    environment:
+      MYSQL_ROOT_PASSWORD: Ocean1234
+      MYSQL_DATABASE: fwrp
+      MYSQL_USER: fwrp
+      MYSQL_PASSWORD: fwrpfwrp
+    volumes:
+      - /Users/renxihai/data/mysql-final:/var/lib/mysql
+      - ./docs/sql/database_schema.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"

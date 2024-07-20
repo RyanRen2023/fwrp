@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
     <!-- Define Persistence Unit -->
-    <persistence-unit name="my_persistence_unit">
-        
+    <!--  <persistence-unit name="com.algonquin.cst8288_fwrps_war_1.0-SNAPSHOTPU" transaction-type="JTA">
+      <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+      <jta-data-source>fwrp</jta-data-source>
+      <exclude-unlisted-classes>false</exclude-unlisted-classes>
+      <properties>
+        <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+      </properties>
+    </persistence-unit>-->
+    <persistence-unit name="myPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.algonquin.cst8288.fwrps.model.User</class>
+        <properties>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fwrp"/>
+            <property name="jakarta.persistence.jdbc.user" value="fwrp"/>
+            <property name="jakarta.persistence.jdbc.password" value="fwrp"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
     </persistence-unit>
 </persistence>

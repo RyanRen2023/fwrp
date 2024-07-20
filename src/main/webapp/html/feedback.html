@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Food Waste Reduction Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="system-info">
+            <h2>Food Waste Reduction Platform</h2>
+        </div>
+        <div class="user-info">
+            <span>Welcome, User</span>
+            <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="main-content">
+        <nav class="sidebar">
+            <a class="navbar-brand" href="#">Food Waste Reduction</a>
+            <a class="nav-link" href="dashboard.html" data-target="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="inventory.html" data-target="inventory.html">Manage Inventory</a>
+            <a class="nav-link" href="surplus-food.html" data-target="surplus-food.html">Surplus Food</a>
+            <a class="nav-link" href="purchase-claim.html" data-target="purchase-claim.html">Purchase/Claim Food</a>
+            <a class="nav-link" href="notifications.html" data-target="notifications.html">Notifications</a>
+            <a class="nav-link" href="subscribe-alerts.html" data-target="subscribe-alerts.html">Subscribe to Alerts</a>
+            <a class="nav-link" href="search.html" data-target="search.html">Search</a>
+            <a class="nav-link" href="feedback.html" data-target="feedback.html">Feedback</a>
+        </nav>
+        <div class="content container">
+            <h1>Feedback</h1>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="foodItem">Food Item</label>
+                    <input type="text" class="form-control" id="foodItem" required>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select class="form-control" id="rating" required>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Average</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Very Poor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea class="form-control" id="comments" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+            </form>
+            <h2 class="mt-5">Submitted Feedback</h2>
+            <ul class="list-group" id="feedbackList">
+                <!-- Feedback items will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            // Implement logout functionality
+            alert('Logging out...');
+        }
+
+        $(document).ready(function () {
+            $('.nav-link').on('click', function (e) {
+                e.preventDefault();
+                const target = $(this).data('target');
+                $('.content').load(target);
+            });
+
+            $('#feedbackForm').on('submit', function (e) {
+                e.preventDefault();
+                const foodItem = $('#foodItem').val();
+                const rating = $('#rating').val();
+                const comments = $('#comments').val();
+                const feedbackItem = `
+                    <li class="list-group-item">
+                        <h5>${foodItem} - Rating: ${rating}</h5>
+                        <p>${comments}</p>
+                    </li>`;
+                $('#feedbackList').append(feedbackItem);
+                $('#feedbackForm')[0].reset();
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

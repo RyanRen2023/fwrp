@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe to Alerts - Food Waste Reduction Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="system-info">
+            <h2>Food Waste Reduction Platform</h2>
+        </div>
+        <div class="user-info">
+            <span>Welcome, User</span>
+            <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="main-content">
+        <nav class="sidebar">
+            <a class="navbar-brand" href="#">Food Waste Reduction</a>
+            <a class="nav-link" href="dashboard.html" data-target="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="inventory.html" data-target="inventory.html">Manage Inventory</a>
+            <a class="nav-link" href="surplus-food.html" data-target="surplus-food.html">Surplus Food</a>
+            <a class="nav-link" href="purchase-claim.html" data-target="purchase-claim.html">Purchase/Claim Food</a>
+            <a class="nav-link" href="notifications.html" data-target="notifications.html">Notifications</a>
+            <a class="nav-link" href="subscribe-alerts.html" data-target="subscribe-alerts.html">Subscribe to Alerts</a>
+            <a class="nav-link" href="search.html" data-target="search.html">Search</a>
+            <a class="nav-link" href="feedback.html" data-target="feedback.html">Feedback</a>
+        </nav>
+        <div class="content container">
+            <h1>Subscribe to Alerts</h1>
+            <form id="subscribeForm">
+                <div class="form-group">
+                    <label for="alertType">Alert Type</label>
+                    <select class="form-control" id="alertType" required>
+                        <option value="surplus">Surplus Food Alert</option>
+                        <option value="discount">Discounted Food Alert</option>
+                        <option value="expiry">Expiring Soon Alert</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+            <h2 class="mt-5">Subscribed Alerts</h2>
+            <ul class="list-group" id="subscribedAlerts">
+                <!-- Subscribed alerts will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            // Implement logout functionality
+            alert('Logging out...');
+        }
+
+        $(document).ready(function () {
+            $('.nav-link').on('click', function (e) {
+                e.preventDefault();
+                const target = $(this).data('target');
+                $('.content').load(target);
+            });
+
+            $('#subscribeForm').on('submit', function (e) {
+                e.preventDefault();
+                const alertType = $('#alertType').val();
+                const email = $('#email').val();
+                const alertItem = `<li class="list-group-item">${alertType} - ${email}</li>`;
+                $('#subscribedAlerts').append(alertItem);
+                $('#subscribeForm')[0].reset();
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

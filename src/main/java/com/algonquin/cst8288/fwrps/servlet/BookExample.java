@@ -1,5 +1,5 @@
 
-package com.algonquin.cst8288.fwrps.controller;
+package com.algonquin.cst8288.fwrps.servlet;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

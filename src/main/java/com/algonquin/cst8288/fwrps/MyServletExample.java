@@ -4,8 +4,8 @@
  */
 package com.algonquin.cst8288.fwrps;
 
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author renxihai
  */
-@WebServlet(name = "MyServlet", urlPatterns = {"/hello"})
+@WebServlet(name = "MyServlet", urlPatterns = {"/hello2"})
 public class MyServletExample extends HttpServlet {
 
     /**
@@ -30,22 +30,8 @@ public class MyServletExample extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MyServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MyServlet at " + request.getContextPath() + "</h1>");
-            out.println("<h1>Servlet MyServlet at " + request.getContextPath() + "</h1>");
-            out.println("<h1>Servlet MyServlet at " + request.getContextPath() + "</h1>");
-            out.println("<h1>Servlet MyServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Resource id="fwrp" type="javax.sql.DataSource">#Fri Jul 19 21:19:56 EDT 2024
+jdbcDriver=com.mysql.cj.jdbc.Driver
+jdbcUrl=jdbc\:mysql\://localhost\:3306/fwrp?zeroDateTimeBehavior\=CONVERT_TO_NULL
+password=fwrp
+userName=fwrp
+</Resource>
+</resources>
