@@ -1,59 +1,54 @@
 package com.algonquin.cst8288.fwrps.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    private List<RatingAndFeedback> ratingAndFeedbackList;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
-    private Integer userID;
+    @Column(name = "uid")
+    private Integer uid;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "Username")
-    private String username;
+    @Column(name = "name", length = 20)
+    private String name;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "Email")
+    @Column(name = "email", length = 50)
     private String email;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "Password")
+    @Column(name = "password", length = 50)
     private String password;
 
-    @NotNull
-    @Column(name = "Role")
-    private String role;
+    @Column(name = "user_type", length = 20)
+    private String userType;
 
-    @Column(name = "CreatedAt")
+    @Column(name = "last_login")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private Date lastLogin;
 
     // Getters and Setters
-
-    public Integer getUserID() {
-        return userID;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -72,19 +67,53 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getLastLogin() {
+        return lastLogin;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    @Override
+    public int hashCode() {
+        return uid != null ? uid.hashCode() : 0;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof User)) {
+            return false;
+        }
+        User other = (User) object;
+        return uid != null && uid.equals(other.uid);
+    }
+
+    @Override
+    public String toString() {
+        return "User[ uid=" + uid + " ]";
+    }
+
+    public User() {
+    }
+
+    @XmlTransient
+    public List<RatingAndFeedback> getRatingAndFeedbackList() {
+        return ratingAndFeedbackList;
+    }
+
+    public void setRatingAndFeedbackList(List<RatingAndFeedback> ratingAndFeedbackList) {
+        this.ratingAndFeedbackList = ratingAndFeedbackList;
     }
 }
