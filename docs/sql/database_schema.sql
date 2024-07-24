@@ -1,7 +1,23 @@
--- Create database
+-- use root user to execute the sql script
+
+-- Drop the fwrp database if it exists
 DROP DATABASE IF EXISTS fwrp;
+
+-- Create a new database named fwrp
 CREATE DATABASE fwrp;
+
+-- Switch to the fwrp database
 USE fwrp;
+
+-- Create a new user named fwrpr with the password fwrpfwrp
+CREATE USER 'fwrpr'@'localhost' IDENTIFIED BY 'fwrpfwrp';
+
+-- Grant all privileges on the fwrp database to the user fwrpr
+GRANT ALL PRIVILEGES ON fwrp.* TO 'fwrpr'@'localhost';
+
+-- Refresh the privileges to ensure that the changes take effect
+FLUSH PRIVILEGES;
+
 
 -- Create User table
 CREATE TABLE user (
