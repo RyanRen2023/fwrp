@@ -1,23 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrps.dao;
 
 import com.algonquin.cst8288.fwrps.model.User;
+import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author renxihai
  */
-public class UserDaoImpl implements UserDao {
+@Dependent
+public class UserDaoImpl implements UserDao, Serializable {
 
     @PersistenceContext(unitName = "myPersistenceUnit")
-    private EntityManager em;
+    private transient EntityManager em;
 
     @Override
     public void createUser(User user) {
