@@ -42,6 +42,8 @@ The intended audience for this document are realtors and customers who may be in
 
 ## 5. Application Architecture
 ### High-level architecture
+<img width="417" alt="image" src="https://github.com/user-attachments/assets/2431867e-502f-4c52-bbef-356b23edb165">
+
 **Presentation Layer (JSP + HTML + CSS + JavaScript):**
 - **User Interface (UI):** Provides the user interaction interface, implemented using JSP, HTML, CSS, and JavaScript technology.
 - **Authentication Module:** Manages user registration, login, and logout functionality, implemented using JSP and Servlets.
@@ -60,7 +62,8 @@ The intended audience for this document are realtors and customers who may be in
 
 ## 6. Business Architecture
 ### Use Case diagram
-![Use Case Diagram](path/to/your/image.png)
+<img width="282" alt="image" src="https://github.com/user-attachments/assets/590750e2-77f2-46ce-8f0c-0122753d0258">
+
 
 **Description:**
 - **Retailer:** Register, Login, Manage Inventory, Identify Surplus Food, List Surplus Food Item, Receive Notifications, Subscribe to Alerts.
@@ -68,7 +71,6 @@ The intended audience for this document are realtors and customers who may be in
 - **Charity Organization:** Register, Login, Claim Food, Receive Notifications, Subscribe to Alerts.
 
 ## 7. Detailed Design
-![Detailed Design Diagram](path/to/your/image.png)
 
 ## 8. Database Structures
 The database architecture includes tables for storing information about food items, orders, stores, subscriptions, users, and food types. The tables that will be used in this project are:
