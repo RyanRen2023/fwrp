@@ -12,18 +12,6 @@
 **Date:** 2024-07-21  
 **Version #01**
 
-**Name**: Angela Martins  
-**Email**: alve0046@algonquinlive.com  
-
-**Name**: Sam Doiron  
-**Email**: doir0052@algonquinlive.com  
-
-**Name**: Xihai Ren  
-**Email**: ren00055@algonquinlive.com  
-
-**Name**: Uyen Minh  
-**Email**: trin0072@algonquinlive.com  
-
 ---
 
 ## 2. Introduction
