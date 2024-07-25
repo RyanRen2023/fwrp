@@ -4,4 +4,4 @@
     Author     : renxihai
 --%>
 
-<% response.sendRedirect("dashboard"); %>
+<% response.sendRedirect("jsp/login.jsp"); %>
