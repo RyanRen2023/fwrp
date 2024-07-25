@@ -1,3 +1,5 @@
+
+
 # High-Level Design
 
 ## Version History
@@ -134,3 +136,11 @@ For this project we will use Junit as our testing application, and to verify the
 3. tutorialspoint, “Java Cryptography - Encrypting Data”. [Java Cryptography](https://www.tutorialspoint.com/java_cryptography/java_cryptography_encrypting_data.htm)
 4. V Developer, “How to Add Two-Factor Authentication (2FA) Using Java and Spark”, April 27, 2023. [2FA in Java](https://developer.vonage.com/en/blog/how-to-add-two-factor-authentication-using-java-and-spark)
 5. Medium, “Implementing a Simple Load Balancer in Java”, Apr 11, 2024. [Load Balancer in Java](https://medium.com/@kowsalyathirupp
+
+## 13. Develop Guidline
+
+- [DevelopmentGuidelines](docs/guilines/DevelopmentGuidelines.md)
+
+- [HowToDevelopAServlet](docs/guilines/HowToDevelopAServlet.md)
+
+- [ProjectStructureInstruction](docs/guilines/ProjectStructureInstruction.md)
