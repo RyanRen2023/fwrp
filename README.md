@@ -139,8 +139,8 @@ For this project we will use Junit as our testing application, and to verify the
 
 ## 13. Develop Guidline
 
-- [DevelopmentGuidelines](docs/guilines/DevelopmentGuidelines.md)
+- [DevelopmentGuidelines](docs/guidlines/DevelopmentGuidelines.md)
 
-- [HowToDevelopAServlet](docs/guilines/HowToDevelopAServlet.md)
+- [HowToDevelopAServlet](docs/guidlines/HowToDevelopAServlet.md)
 
-- [ProjectStructureInstruction](docs/guilines/ProjectStructureInstruction.md)
+- [ProjectStructureInstruction](docs/guidlines/ProjectStructureInstruction.md)
