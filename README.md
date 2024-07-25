@@ -76,55 +76,25 @@ The intended audience for this document are realtors and customers who may be in
 The database architecture includes tables for storing information about food items, orders, stores, subscriptions, users, and food types. The tables that will be used in this project are:
 
 **Table: Food**
-- Columns:
-  - fid (Food ID)
-  - fname (Food Name)
-  - expiration (Expiration Date)
-  - price (Price)
-  - inventory (Inventory Count)
-  - discount (Discount Percentage)
-  - ftid (Food Type ID)
-  - is_donate (Flag indicating if the food is for donation)
-  - store_id (Store ID where the food is located)
+
 
 **Table: food_type**
-- Columns:
-  - id (Food Type ID)
-  - name (Food Type Name)
+
 
 **Table: orders**
-- Columns:
-  - oid (Order ID)
-  - uid (User ID placing the order)
-  - fid (Food ID ordered)
-  - total_cost (Total cost of the order)
-  - item_ordered (Number of items ordered)
+
 
 **Table: store**
-- Columns:
-  - store_id (Store ID)
-  - store_name (Store Name)
-  - city (City where the store is located)
-  - uid (User ID of the retailer managing the store)
+
 
 **Table: subscribe**
-- Columns:
-  - sid (Subscription ID)
-  - uid (User ID subscribing)
-  - fid (Food ID subscribed)
-  - create_time (Date and time of subscription)
+
 
 **Table: user**
-- Columns:
-  - uid (User ID)
-  - name (User Name)
-  - email (Email Address)
-  - password (Password)
-  - user_type (User Type: consumer, retailer, organization)
-  - last_login (Timestamp of last login)
+
 
 ### Entity Relationship Diagram – Physical Data Model
-![ER Diagram](path/to/your/image.png)
+
 
 ## 9. Security Architecture
 ### Enforcing Password Policies
