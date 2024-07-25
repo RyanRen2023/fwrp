@@ -137,10 +137,11 @@ For this project we will use Junit as our testing application, and to verify the
 4. V Developer, “How to Add Two-Factor Authentication (2FA) Using Java and Spark”, April 27, 2023. [2FA in Java](https://developer.vonage.com/en/blog/how-to-add-two-factor-authentication-using-java-and-spark)
 5. Medium, “Implementing a Simple Load Balancer in Java”, Apr 11, 2024. [Load Balancer in Java](https://medium.com/@kowsalyathirupp
 
-## 13. Develop Guidline
+## 13. Develop Guidelines
 
-- [DevelopmentGuidelines](docs/guidlines/DevelopmentGuidelines.md)
 
-- [HowToDevelopAServlet](docs/guidlines/HowToDevelopAServlet.md)
+- [Development Guidelines](docs/guidlines/DevelopmentGuidelines.md)
 
-- [ProjectStructureInstruction](docs/guidlines/ProjectStructureInstruction.md)
+- [How to Develop a Servlet](docs/guidlines/HowToDevelopAServlet.md)
+
+- [Project Structure Instructions](docs/guidlines/ProjectStructureInstruction.md)
