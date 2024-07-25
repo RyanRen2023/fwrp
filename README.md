@@ -1,116 +1,176 @@
+# High-Level Design
 
-# High Level Design Document
+## Version History
+| Version # | Name of the Author | Date       |
+|-----------|---------------------|------------|
+| 01        | Angela Martins      | 2024-07-21 |
+| 01        | Sam Doiron          | 2024-07-21 |
+| 01        | Xihai Ren           | 2024-07-21 |
+| 01        | Uyen Minh           | 2024-07-21 |
 
-## Table of Contents
-1. [Introduction](#introduction)
-2. [System Overview](#system-overview)
-3. [Scope](#scope)
-4. [Requirements](#requirements)
-5. [Application Architecture](#application-architecture)
-   1. [Sub heading 1](#sub-heading-1)
-   2. [Sub heading 2](#sub-heading-2)
-6. [Business Architecture](#business-architecture)
-   1. [Sub heading 1](#sub-heading-1-1)
-   2. [Sub heading 2](#sub-heading-2-1)
-7. [Detailed Design](#detailed-design)
-   1. [Sub heading 1](#sub-heading-1-2)
-   2. [Sub heading 2](#sub-heading-2-2)
-8. [Data Architecture](#data-architecture)
-   1. [Sub heading 1](#sub-heading-1-3)
-   2. [Sub heading 2](#sub-heading-2-3)
-9. [Security Architecture](#security-architecture)
-   1. [Sub heading 1](#sub-heading-1-4)
-   2. [Sub heading 2](#sub-heading-2-4)
-10. [Deployment Architecture](#deployment-architecture)
-    1. [Sub heading 1](#sub-heading-1-5)
-    2. [Sub heading 2](#sub-heading-2-5)
-11. [Testing Model](#testing-model)
-    1. [Sub heading 1](#sub-heading-1-6)
-    2. [Sub heading 2](#sub-heading-2-6)
-12. [References](#references)
-13. [Acronyms/Abbreviations](#acronyms-abbreviations)
-14. [List of Figures](#list-of-figures)
+## High-Level Design
+**Date:** 2024-07-21  
+**Version #01**
 
-## Introduction
-_Provide an introduction to the document._
+**Name**: Angela Martins  
+**Email**: alve0046@algonquinlive.com  
 
-## System Overview
-_Provide an overview of the system._
+**Name**: Sam Doiron  
+**Email**: doir0052@algonquinlive.com  
 
-## Scope
-_Define the scope of the document._
+**Name**: Xihai Ren  
+**Email**: ren00055@algonquinlive.com  
 
-## Requirements
-_Outline the requirements._
+**Name**: Uyen Minh  
+**Email**: trin0072@algonquinlive.com  
 
-## Application Architecture
-_High level architecture/overview of the entire system/main components etc._
+---
 
-### Sub heading 1
-_Details for sub heading 1._
+## 2. Introduction
+The Food Waste Reduction platform is a waste management platform. With collaboration from restaurants, consumers, food suppliers, and charitable organizations, this platform promotes sustainability throughout the supply chain as well as efforts to reduce global hunger. This document explores the functionality of the application and provides insight into its layout.
 
-### Sub heading 2
-_Details for sub heading 2._
+## 3. Targeted Audience
+The intended audience for this document are realtors and customers who may be interested in investing in the platform.
 
-## Business Architecture
-_Use Case diagrams along with the description._
+## 4. Scope
+**In Scope:**
 
-### Sub heading 1
-_Details for sub heading 1._
+*Functional Requirements:*
+- User registration and authentication, including account creation, login, and logout functionality.
+- Retailer features, including inventory management, identification and flagging of surplus food, and listing surplus food for donation or sale at a discounted price.
+- Charitable organization features, including claiming food listed for donation by retailers and updating inventory information.
+- Consumer features, including purchasing discounted food (simulated transactions) and updating inventory information.
+- Surplus food alerts, including user subscriptions to surplus food notifications and automatic notifications of surplus food availability.
+- Advanced search, including food search based on various criteria and the application of multiple filters.
+- Food rating and feedback system, including rating and reviewing purchased or claimed food, and submitting, viewing, and responding to feedback.
 
-### Sub heading 2
-_Details for sub heading 2._
+*Non-Functional Requirements:*
+- System security, including user data protection and encryption, transmission encryption, user authentication and authorization, and data privacy.
 
-## Detailed Design
-_Class diagrams, Component diagrams etc._
+**Out of Scope:**
+- Real transaction processing, the platform’s purchasing functionality is limited to simulated transactions and does not include real payment and financial transaction processing.
+- Complex UI design, the platform does not include complex user interface designs, only simple and practical basic interfaces.
+- Other functionalities not listed in the scope, excluding any additional features not explicitly listed in the in-scope section.
 
-### Sub heading 1
-_Details for sub heading 1._
+## 5. Application Architecture
+### High-level architecture
+**Presentation Layer (JSP + HTML + CSS + JavaScript):**
+- **User Interface (UI):** Provides the user interaction interface, implemented using JSP, HTML, CSS, and JavaScript technology.
+- **Authentication Module:** Manages user registration, login, and logout functionality, implemented using JSP and Servlets.
 
-### Sub heading 2
-_Details for sub heading 2._
+**Business Logic Layer (Servlet + Java):**
+- **Retailer Module:** Manages inventory, identifies and flags surplus food, and lists surplus food for donation or sale at a discounted price.
+- **Charitable Organization Module:** Allows charitable organizations to claim surplus food and update inventory.
+- **Consumer Module:** Allows consumers to purchase discounted food and update inventory.
+- **Notification Module:** Manages user subscriptions to surplus food alerts and sends automatic notifications.
+- **Search Module:** Provides advanced search functionality with filtering options.
+- **Feedback Module:** Manages food ratings and feedback submission, viewing, and responding.
 
-## Data Architecture
-_Database structures, ERD, Physical/Logical Data Model._
+**Data Persistence Layer (DAO + RDBMS):**
+- **Data Access Objects (DAO):** Provides an abstraction layer for database operations, ensuring efficient and secure interactions with the database.
+- **Database:** Uses a relational database management system (such as MySQL) to store user data, inventory data, surplus food listings, transaction records, notifications, and feedback.
 
-### Sub heading 1
-_Details for sub heading 1._
+## 6. Business Architecture
+### Use Case diagram
+![Use Case Diagram](path/to/your/image.png)
 
-### Sub heading 2
-_Details for sub heading 2._
+**Description:**
+- **Retailer:** Register, Login, Manage Inventory, Identify Surplus Food, List Surplus Food Item, Receive Notifications, Subscribe to Alerts.
+- **Consumer:** Register, Login, Purchase Surplus Food, Receive Notifications, Rate and Review Food, Search Food, Subscribe to Alerts.
+- **Charity Organization:** Register, Login, Claim Food, Receive Notifications, Subscribe to Alerts.
 
-## Security Architecture
-_What are the security considerations in your designs._
+## 7. Detailed Design
+![Detailed Design Diagram](path/to/your/image.png)
 
-### Sub heading 1
-_Details for sub heading 1._
+## 8. Database Structures
+The database architecture includes tables for storing information about food items, orders, stores, subscriptions, users, and food types. The tables that will be used in this project are:
 
-### Sub heading 2
-_Details for sub heading 2._
+**Table: Food**
+- Columns:
+  - fid (Food ID)
+  - fname (Food Name)
+  - expiration (Expiration Date)
+  - price (Price)
+  - inventory (Inventory Count)
+  - discount (Discount Percentage)
+  - ftid (Food Type ID)
+  - is_donate (Flag indicating if the food is for donation)
+  - store_id (Store ID where the food is located)
 
-## Deployment Architecture
-_Infrastructure, deployment model etc._
+**Table: food_type**
+- Columns:
+  - id (Food Type ID)
+  - name (Food Type Name)
 
-### Sub heading 1
-_Details for sub heading 1._
+**Table: orders**
+- Columns:
+  - oid (Order ID)
+  - uid (User ID placing the order)
+  - fid (Food ID ordered)
+  - total_cost (Total cost of the order)
+  - item_ordered (Number of items ordered)
 
-### Sub heading 2
-_Details for sub heading 2._
+**Table: store**
+- Columns:
+  - store_id (Store ID)
+  - store_name (Store Name)
+  - city (City where the store is located)
+  - uid (User ID of the retailer managing the store)
 
-## Testing Model
-_How are you testing your application. JUnit, API testing etc._
+**Table: subscribe**
+- Columns:
+  - sid (Subscription ID)
+  - uid (User ID subscribing)
+  - fid (Food ID subscribed)
+  - create_time (Date and time of subscription)
 
-### Sub heading 1
-_Details for sub heading 1._
+**Table: user**
+- Columns:
+  - uid (User ID)
+  - name (User Name)
+  - email (Email Address)
+  - password (Password)
+  - user_type (User Type: consumer, retailer, organization)
+  - last_login (Timestamp of last login)
 
-### Sub heading 2
-_Details for sub heading 2._
+### Entity Relationship Diagram – Physical Data Model
+![ER Diagram](path/to/your/image.png)
 
-## References
-_Provide references._
+## 9. Security Architecture
+### Enforcing Password Policies
+**Description:** Ensure that users create secure passwords to access the platform.
+**Details:**
+- Minimum length (e.g., 8 characters)
+- At least one uppercase letter
+- At least one lowercase letter
+- At least one digit
+- At least one special character
+- Create a function to validate passwords against the defined policy.
+- Provide immediate feedback to users when they are creating their passwords.
 
-## Acronyms/Abbreviations
-_List acronyms and abbreviations._
+### User Authentication
+**Description:** Use a password-based method for authentication.
+**Detailed:**
+- **User Registration:** The user registers by providing their username and password. The system stores this information in the database.
+- **Login Request:** The user attempts to log in by entering their username and password. The system uses the Authentication method to get the appropriate authentication method based on the information stored in the database.
+- **Password-Based Authentication:** The authenticate method checks the username and password against the stored values in the database. If the credentials match, the user is authenticated.
 
-## List of Figures
-_Should include clickable links for all figures used in your entire report._
+## 10. Deployment Architecture
+- **Client-Side:** Users interact with the platform through a web browser. These clients send requests to the server-side components.
+- **Server-Side:** The application server processes requests, and interacts with databases.
+- **Data Storage:** The primary database handles structured data.
+
+## 11. Testing Model
+For this project we will use Junit as our testing application, and to verify the functionality, reliability, and performance, we will perform the following tests:
+- Test to ensure that the attributes from each entity can be created, modified, and deleted correctly.
+- Verify the accuracy of analytics calculations (e.g., total food saved, and donations made).
+- Test complete workflows within the application including simulation of user actions (e.g., adding food items, making donations) and analysis of expected outcomes.
+- Testing interactions between different components (e.g., user interface, database).
+- Test scenarios at the limits of acceptable input values and perform a behavior validation when unexpected inputs are provided.
+
+## 12. References
+1. J. Gomez, “What is an application architecture diagram?,” Koombea, Feb. 05, 2024. [Application Architecture Diagram](https://www.koombea.com/blog/application-architecture-diagram/#:~:text=Application%20architecture%20diagrams%20offer%20a,engineering%20and%20cloud%2Dnative%20projects)
+2. Arthur C. Codex, “Java cryptography: Encrypting and decrypting data”, April 18, 2023. [Java Cryptography](https://reintech.io/blog/java-cryptography-encrypting-decrypting-data-tutorial)
+3. tutorialspoint, “Java Cryptography - Encrypting Data”. [Java Cryptography](https://www.tutorialspoint.com/java_cryptography/java_cryptography_encrypting_data.htm)
+4. V Developer, “How to Add Two-Factor Authentication (2FA) Using Java and Spark”, April 27, 2023. [2FA in Java](https://developer.vonage.com/en/blog/how-to-add-two-factor-authentication-using-java-and-spark)
+5. Medium, “Implementing a Simple Load Balancer in Java”, Apr 11, 2024. [Load Balancer in Java](https://medium.com/@kowsalyathirupp
