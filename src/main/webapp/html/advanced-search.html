@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Search - Food Waste Reduction Platform</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="system-info">
+            <h2>Food Waste Reduction Platform</h2>
+        </div>
+        <div class="user-info">
+            <span>Welcome, User</span>
+            <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="main-content">
+        <nav class="sidebar">
+            <a class="navbar-brand" href="#">Food Waste Reduction</a>
+            <a class="nav-link" href="dashboard.html" data-target="dashboard.html">Dashboard</a>
+            <a class="nav-link" href="inventory.html" data-target="inventory.html">Manage Inventory</a>
+            <a class="nav-link" href="surplus-food.html" data-target="surplus-food.html">Surplus Food</a>
+            <a class="nav-link" href="purchase-claim.html" data-target="purchase-claim.html">Purchase/Claim Food</a>
+            <a class="nav-link" href="notifications.html" data-target="notifications.html">Notifications</a>
+            <a class="nav-link" href="subscribe-alerts.html" data-target="subscribe-alerts.html">Subscribe to Alerts</a>
+            <a class="nav-link" href="search.html" data-target="search.html">Search</a>
+            <a class="nav-link" href="feedback.html" data-target="feedback.html">Feedback</a>
+        </nav>
+
+        <div class="content container p-4">
+            <h1>Search</h1>
+            <form id="searchForm" class="mb-4">
+                <div class="form-group">
+                    <label for="searchQuery">Search Query</label>
+                    <input type="text" class="form-control" id="searchQuery" required>
+                </div>
+                <div class="filters mb-4">
+                    <div class="filter-group">
+                        <label for="food-type">Food Type</label>
+                        <select id="food-type" class="form-control">
+                            <option value="">Select Type</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="meat">Meat</option>
+                            <option value="dairy">Dairy</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="price-range">Price Range</label>
+                        <select id="price-range" class="form-control">
+                            <option value="">Select Range</option>
+                            <option value="5">Below $5</option>
+                            <option value="5-10">$5 - $10</option>
+                            <option value="10">Above $10</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="expiration">Expiration</label>
+                        <select id="expiration" class="form-control">
+                            <option value="">Select Expiration</option>
+                            <option value="1">1 day</option>
+                            <option value="3">3 days</option>
+                            <option value="7">1 week</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="supplier">Supplier</label>
+                        <input type="text" id="supplier" class="form-control" placeholder="Enter supplier name">
+                    </div>
+                    <div class="filter-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" class="form-control" placeholder="Enter location">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <h2 class="mt-5">Search Results</h2>
+            <div class="results" id="searchResults">
+                <!-- Search results will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../js/search.js"></script>
+</body>
+
+</html>

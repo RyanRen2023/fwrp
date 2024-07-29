@@ -30,4 +30,8 @@ public class FoodSearchService {
     public List<FoodSearch> searchFood(String query) {
         return foodSearchDao.searchFood(query);
     }
+
+    public List<FoodSearch> search(String searchQuery, String foodType, String priceRange, String expiration, String supplier, String location) {
+        return foodSearchDao.search(searchQuery, foodType, priceRange, expiration, supplier, location);
+    }
 }

@@ -4,7 +4,10 @@
  */
 package com.algonquin.cst8288.fwrptomc.servlet;
 
+import com.algonquin.cst8288.fwrptomc.model.FoodSearch;
+import com.algonquin.cst8288.fwrptomc.service.FoodSearchService;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "SearchServlet", urlPatterns = {"/search"})
 public class SearchServlet extends HttpServlet {
 
+    private FoodSearchService foodSearchService = new FoodSearchService();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,7 +34,35 @@ public class SearchServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        String action = request.getParameter("action");
+
+        if ("search".equals(action)) {
+            // Perform search
+            performSearch(request, response);
+        } else {
+            // Show search page
+            request.setAttribute("searchPage", "searchPage");
+
+            request.getRequestDispatcher("/jsp/search.jsp").forward(request, response);
+        }
+    }
+
+    private void performSearch(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Get search parameters
+        String searchQuery = request.getParameter("searchQuery");
+        String foodType = request.getParameter("foodType");
+        String priceRange = request.getParameter("priceRange");
+        String expiration = request.getParameter("expiration");
+        String supplier = request.getParameter("supplier");
+        String location = request.getParameter("location");
+
+        // Perform search using SearchService
+        // Perform search using FoodSearchService
+        List<FoodSearch> searchResults = foodSearchService.search(searchQuery, foodType, priceRange, expiration, supplier, location);
+        // Set search results as request attribute and forward to JSP
+        request.setAttribute("searchResults", searchResults);
         request.getRequestDispatcher("/jsp/search.jsp").forward(request, response);
     }
 

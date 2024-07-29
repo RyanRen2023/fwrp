@@ -1,0 +1,14 @@
+@startuml
+actor consumer
+database mysql order 1
+consumer -> searchPage: input name ,click search button
+searchPage -> SearchServlet: /search/{food name}
+SearchServlet -> SearchService: search by name
+SearchService -> SearchDao: search by name
+SearchDao -> mysql: search sql
+mysql --> SearchDao: search result 
+SearchDao --> SearchService: search result
+SearchService --> SearchServlet: earch result
+SearchServlet --> searchPage
+searchPage --> consumer
+@enduml

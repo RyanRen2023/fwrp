@@ -1,0 +1,4 @@
+@startuml
+actor consumer
+consumer -> (Search Food)
+@enduml

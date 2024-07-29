@@ -85,4 +85,82 @@ public class FoodSearchDao {
 
         return foodSearchList;
     }
+
+    public List<FoodSearch> search(String searchQuery, String foodType, String priceRange, String expiration, String supplier, String location) {
+        List<FoodSearch> foodSearchList = new ArrayList<>();
+        String sql = "SELECT f.fid, f.fname, f.expiration, f.price, f.inventory, f.discount, f.is_donate, f.food_type, f.store_name, f.city "
+                + "FROM food_search f "
+                + "WHERE 1=1 ";
+
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            sql += "AND f.fname LIKE ? ";
+        }
+        if (foodType != null && !foodType.isEmpty()) {
+            sql += "AND f.food_type = ? ";
+        }
+        if (priceRange != null && !priceRange.isEmpty()) {
+            switch (priceRange) {
+                case "5":
+                    sql += "AND f.price < 5 ";
+                    break;
+                case "5-10":
+                    sql += "AND f.price BETWEEN 5 AND 10 ";
+                    break;
+                case "10":
+                    sql += "AND f.price > 10 ";
+                    break;
+            }
+        }
+        if (expiration != null && !expiration.isEmpty()) {
+            sql += "AND f.expiration >= DATE_ADD(CURDATE(), INTERVAL ? DAY) ";
+        }
+        if (supplier != null && !supplier.isEmpty()) {
+            sql += "AND f.store_name = ? ";
+        }
+        if (location != null && !location.isEmpty()) {
+            sql += "AND f.city = ? ";
+        }
+
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            int paramIndex = 1;
+
+            if (searchQuery != null && !searchQuery.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + searchQuery + "%");
+            }
+            if (foodType != null && !foodType.isEmpty()) {
+                stmt.setString(paramIndex++, foodType);
+            }
+            if (expiration != null && !expiration.isEmpty()) {
+                stmt.setInt(paramIndex++, Integer.parseInt(expiration));
+            }
+            if (supplier != null && !supplier.isEmpty()) {
+                stmt.setString(paramIndex++, supplier);
+            }
+            if (location != null && !location.isEmpty()) {
+                stmt.setString(paramIndex++, location);
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    FoodSearch foodSearch = new FoodSearch();
+                    foodSearch.setFid(rs.getInt("fid"));
+                    foodSearch.setFname(rs.getString("fname"));
+                    foodSearch.setExpiration(rs.getDate("expiration").toLocalDate());
+                    foodSearch.setPrice(rs.getBigDecimal("price"));
+                    foodSearch.setInventory(rs.getInt("inventory"));
+                    foodSearch.setDiscount(rs.getDouble("discount"));
+                    foodSearch.setIsDonate(rs.getInt("is_donate"));
+                    foodSearch.setFoodType(rs.getString("food_type"));
+                    foodSearch.setStoreName(rs.getString("store_name"));
+                    foodSearch.setCity(rs.getString("city"));
+                    foodSearchList.add(foodSearch);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return foodSearchList;
+    }
 }

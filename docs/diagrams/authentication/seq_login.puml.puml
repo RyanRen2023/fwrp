@@ -1,0 +1,57 @@
+@startuml
+actor users
+boundary loginPage 
+boundary dashboardPage
+boundary signupPage
+control UserSevlet
+participant AuthService
+participant UserService
+database mysql order 8
+group login
+users -> loginPage:login request
+loginPage -> UserSevlet: login
+UserSevlet -> AuthService:login
+AuthService -> UserDao:getUserByEmail
+UserDao -> mysql
+mysql --> UserDao
+UserDao --> AuthService: return user
+AuthService --> UserSevlet: return check result
+
+alt login successful
+
+    UserSevlet --> dashboardPage
+    dashboardpage --> users
+
+else login failure
+    UserSevlet --> loginPage
+    loginPage --> users
+end
+end
+
+group logout
+users -> dashboardPage: logout
+dashboardPage -> UserSevlet:logout
+UserSevlet -> AuthService:logout
+UserSevlet --> loginPage
+loginPage --> users
+end
+
+group sign up
+
+users -> signupPage:sign up
+signupPage -> UserSevlet: signUp
+UserSevlet -> UserService:signUp
+UserService -> UserDao: insert user
+UserDao -> mysql: insert user
+UserDao --> UserService: return insert result
+UserService --> UserSevlet: return sign up result
+    alt register succefully
+        UserSevlet --> loginPage:show success message
+        loginPage --> users
+    else register failure
+        UserSevlet --> signupPage:show failure message
+        signupPage --> users
+    end 
+end
+
+@enduml

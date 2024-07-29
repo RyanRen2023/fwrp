@@ -1,0 +1,7 @@
+@startuml
+left to right direction
+
+users --> (login)
+users --> (logout)
+users --> (Sign up)
+@enduml
