@@ -10,10 +10,10 @@ CREATE DATABASE fwrp;
 USE fwrp;
 
 -- Create a new user named fwrpr with the password fwrpfwrp
-CREATE USER 'fwrpr'@'localhost' IDENTIFIED BY 'fwrpfwrp';
+CREATE USER 'fwrp'@'%' IDENTIFIED BY 'fwrpfwrp';
 
 -- Grant all privileges on the fwrp database to the user fwrpr
-GRANT ALL PRIVILEGES ON fwrp.* TO 'fwrpr'@'localhost';
+GRANT ALL PRIVILEGES ON fwrp.* TO 'fwrp'@'%';
 
 -- Refresh the privileges to ensure that the changes take effect
 FLUSH PRIVILEGES;
