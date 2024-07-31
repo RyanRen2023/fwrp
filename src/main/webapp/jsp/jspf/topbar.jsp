@@ -26,9 +26,11 @@
     </div>
     <div class="user-info">
         <span>Welcome, ${loggedInUser.name}</span>
-        <form action="${pageContext.request.contextPath}/logout" method="post" style="display:inline;">
+        <form id="logoutForm" action="${pageContext.request.contextPath}/logout" method="post" style="display:inline;">
             <button type="submit" class="btn btn-danger btn-sm">Logout</button>
         </form>
     </div>
 
 </div>
+<script src="<%= request.getContextPath()%>/js/script.js"></script>
+

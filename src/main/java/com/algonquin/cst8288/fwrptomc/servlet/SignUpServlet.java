@@ -19,6 +19,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import java.io.PrintWriter;
 
 /**
@@ -32,20 +33,9 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        
 
-        // Read JSON data from request
-        StringBuilder sb = new StringBuilder();
-        BufferedReader reader = request.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-        }
-        String jsonData = sb.toString();
-
-        // Parse JSON data
-        JsonObject jsonObject = JsonParser.parseString(jsonData).getAsJsonObject();
+        JsonObject jsonObject = requestJsonObj(request);
 
         String username = jsonObject.get("username").getAsString();
         String email = jsonObject.get("email").getAsString();
@@ -69,10 +59,26 @@ public class SignUpServlet extends HttpServlet {
             responseJson.addProperty("message", "Registration successful!");
 
         }
-
+        
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(new Gson().toJson(responseJson));
         out.flush();
+    }
+
+    private JsonObject requestJsonObj(HttpServletRequest request) throws IOException, JsonSyntaxException {
+        // Read JSON data from request
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = request.getReader();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        String jsonData = sb.toString();
+        // Parse JSON data
+        JsonObject jsonObject = JsonParser.parseString(jsonData).getAsJsonObject();
+        return jsonObject;
     }
 
     private Map<String, String> validateRequest(String email, String password, String username, String confirmPassword) {

@@ -1,0 +1,10 @@
+@startuml
+actor users
+boundary "Logout Button" as logout
+
+users -> logout: click
+logout -> LogoutServlet: logout
+LogoutServlet -> AuthService: logout
+
+
+@enduml

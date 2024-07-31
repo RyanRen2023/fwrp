@@ -2,11 +2,11 @@
 actor users
 boundary loginPage.jsp
 boundary SignupPage.jsp
-control UserSevlet
+control SignUpServlet
 database MySQL order 1
 users -> SignupPage.jsp
 Signup.jsp -> UserServlet:login action = signUp
-UserSevlet -> UserService: signUp
+SignUpServlet -> UserService: signUp
 UserService -> UserDao:createUser
 UserDao -> MySQL: insert
 UserDao --> UserService: return result

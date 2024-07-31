@@ -1,19 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.algonquin.cst8288.fwrps.model.User" %>
-<%@ page import="com.algonquin.cst8288.fwrps.service.UserService" %>
-<%@ page import="jakarta.persistence.EntityManagerFactory" %>
-<%@ page import="jakarta.persistence.Persistence" %>
 
-<%
-    EntityManagerFactory emf = (EntityManagerFactory) application.getAttribute("emf");
-    if (emf == null) {
-        emf = Persistence.createEntityManagerFactory("myPersistenceUnit");
-        application.setAttribute("emf", emf);
-    }
-    UserService userService = new UserService(emf);
-    List<User> userList = userService.getAllUsers();
-%>
 
 <html>
 <head>
