@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-center">
-                            <a href="register.jsp">Don't have an account? Register here</a>
+                            <a href="sign-up.jsp">Don't have an account? Register here</a>
                         </div>
                     </div>
                 </div>

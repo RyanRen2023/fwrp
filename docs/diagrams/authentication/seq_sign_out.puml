@@ -1,0 +1,19 @@
+@startuml
+actor users
+boundary loginPage.jsp
+boundary SignupPage.jsp
+control UserSevlet
+database MySQL order 1
+users -> SignupPage.jsp
+Signup.jsp -> UserServlet:login action = signUp
+UserSevlet -> UserService: signUp
+UserService -> UserDao:createUser
+UserDao -> MySQL: insert
+UserDao --> UserService: return result
+UserService --> UserServlet: return result
+alt sign up success
+UserServlet --> loginPage.jsp
+else  sign up failure
+UserServlet --> SignupPage.jsp
+end
+@enduml

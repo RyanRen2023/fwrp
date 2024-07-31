@@ -15,6 +15,20 @@ public class User {
     private String userType;
     private LocalDateTime lastLogin;
 
+    public User() {
+    }
+    
+    
+
+    public User(String name, String email, String password, String userType) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.userType = userType;
+    }
+    
+    
+
     // Getters and Setters
     public int getUid() {
         return uid;
