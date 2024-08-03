@@ -57,4 +57,8 @@ public class SubscribeService {
     public List<Subscribe> getAllSubscribes() {
         return subscribeDao.getAllSubscribes();
     }
+    
+    public List<Subscribe> searchSubscribesByAlertType(String alertType){
+        return subscribeDao.findByAlertType(alertType);
+    } 
 }

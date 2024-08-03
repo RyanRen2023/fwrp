@@ -15,6 +15,8 @@ public class Subscribe {
     private int uid;
     private int fid;
     private LocalDate createTime;
+    private String alertType;
+    private String email;
 
     // Getters and Setters
     public int getSid() {
@@ -48,4 +50,23 @@ public class Subscribe {
     public void setCreateTime(LocalDate createTime) {
         this.createTime = createTime;
     }
+    
+    public String getAlertType() {
+        return alertType;
+    }
+
+    public void setAlertType(String alertType) {
+        this.alertType = alertType;
+    }
+    
+     public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
+
 }

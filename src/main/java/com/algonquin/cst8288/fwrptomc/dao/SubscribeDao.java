@@ -23,12 +23,17 @@ public class SubscribeDao {
      * @param subscribe the subscription to be added
      */
     public void addSubscribe(Subscribe subscribe) {
-        String sql = "INSERT INTO subscribe (uid, fid, create_time) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO subscribe (uid, fid,create_time,alert_type, email) "
+                + "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+           
             pstmt.setInt(1, subscribe.getUid());
             pstmt.setInt(2, subscribe.getFid());
             pstmt.setDate(3, Date.valueOf(subscribe.getCreateTime()));
+            pstmt.setString(4, subscribe.getAlertType());
+            pstmt.setString(5, subscribe.getEmail());
+             
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,13 +46,15 @@ public class SubscribeDao {
      * @param subscribe the subscription to be updated
      */
     public void updateSubscribe(Subscribe subscribe) {
-        String sql = "UPDATE subscribe SET uid = ?, fid = ?, create_time = ? WHERE sid = ?";
+        String sql = "UPDATE subscribe "
+                + "SET alert_type = ? , email = ?"
+                + "WHERE sid = ?";
 
         try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, subscribe.getUid());
-            pstmt.setInt(2, subscribe.getFid());
-            pstmt.setDate(3, Date.valueOf(subscribe.getCreateTime()));
-            pstmt.setInt(4, subscribe.getSid());
+            
+            pstmt.setString(1, subscribe.getAlertType());
+            pstmt.setString(2, subscribe.getEmail());
+            pstmt.setInt(3, subscribe.getSid());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,9 +93,11 @@ public class SubscribeDao {
 
             if (rs.next()) {
                 subscribe = new Subscribe();
-                subscribe.setSid(rs.getInt("sid"));
                 subscribe.setUid(rs.getInt("uid"));
                 subscribe.setFid(rs.getInt("fid"));
+                subscribe.setCreateTime(rs.getDate("create_time").toLocalDate());
+                subscribe.setAlertType(rs.getString("alert_type"));
+                subscribe.setEmail(rs.getString("email"));
                 subscribe.setCreateTime(rs.getDate("create_time").toLocalDate());
             }
         } catch (SQLException e) {
@@ -107,15 +116,49 @@ public class SubscribeDao {
         String sql = "SELECT * FROM subscribe";
         List<Subscribe> subscribes = new ArrayList<>();
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (
+                Connection conn = jdbcClient.getConnection(); 
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                ResultSet rs = pstmt.executeQuery()) {
+           
             while (rs.next()) {
                 Subscribe subscribe = new Subscribe();
+                
                 subscribe.setSid(rs.getInt("sid"));
                 subscribe.setUid(rs.getInt("uid"));
                 subscribe.setFid(rs.getInt("fid"));
                 subscribe.setCreateTime(rs.getDate("create_time").toLocalDate());
+                subscribe.setAlertType(rs.getString("alert_type"));
+                subscribe.setEmail(rs.getString("email"));
                 subscribes.add(subscribe);
+                
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return subscribes;
+    }
+    
+    public List<Subscribe> findByAlertType(String alertType) {
+        List<Subscribe> subscribes = new ArrayList<>();
+        String sql = "SELECT * FROM subscribes WHERE alertType LIKE ?";
+
+        try (Connection conn = jdbcClient.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + alertType + "%");
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Subscribe subscribe = new Subscribe();
+                    subscribe.setSid(rs.getInt("sid"));
+                    subscribe.setAlertType(rs.getString("alertType"));
+                    subscribe.setEmail(rs.getString("email"));
+                    subscribes.add(subscribe);
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
