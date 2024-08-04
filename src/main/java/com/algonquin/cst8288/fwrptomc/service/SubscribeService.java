@@ -17,8 +17,8 @@ public class SubscribeService {
      *
      * @param subscribe the subscription to be added
      */
-    public void addSubscribe(Subscribe subscribe) {
-        subscribeDao.addSubscribe(subscribe);
+    public Subscribe addSubscribe(Subscribe subscribe) {
+        return subscribeDao.addSubscribe(subscribe);
     }
 
     /**
