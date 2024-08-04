@@ -73,6 +73,10 @@ CREATE TABLE subscribe (
   create_time DATE DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+alter table subscribe add column alert_type varchar(255) not null;
+alter table subscribe add column email varchar(255) not null;
+
+
 -- Create Rating and Feedback table
 CREATE TABLE RatingAndFeedback (
     RatingID INT PRIMARY KEY AUTO_INCREMENT,
