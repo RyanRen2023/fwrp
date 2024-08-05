@@ -7,6 +7,10 @@ package com.algonquin.cst8288.fwrptomc.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ *
+ * @author renxihai
+ */
 public class Food {
     private int fid;
     private String fname;
@@ -17,6 +21,31 @@ public class Food {
     private int ftid;
     private int isDonate;
     private int storeId;
+
+    public Food() {
+    }
+
+    public Food(int fid, String fname, LocalDate expiration, BigDecimal price, int inventory, Double discount, int ftid, int isDonate, int storeId) {
+        this.fid = fid;
+        this.fname = fname;
+        this.expiration = expiration;
+        this.price = price;
+        this.inventory = inventory;
+        this.discount = discount;
+        this.ftid = ftid;
+        this.isDonate = isDonate;
+        this.storeId = storeId;
+    }
+    public Food(String fname, LocalDate expiration, BigDecimal price, int inventory, Double discount, int ftid, int isDonate, int storeId) {
+        this.fname = fname;
+        this.expiration = expiration;
+        this.price = price;
+        this.inventory = inventory;
+        this.discount = discount;
+        this.ftid = ftid;
+        this.isDonate = isDonate;
+        this.storeId = storeId;
+    }
 
     // Getters and Setters
     public int getFid() {
@@ -89,5 +118,20 @@ public class Food {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "fid=" + fid +
+                ", fname='" + fname + '\'' +
+                ", expiration=" + expiration +
+                ", price=" + price +
+                ", inventory=" + inventory +
+                ", discount=" + discount +
+                ", ftid=" + ftid +
+                ", isDonate=" + isDonate +
+                ", storeId=" + storeId +
+                '}';
     }
 }
