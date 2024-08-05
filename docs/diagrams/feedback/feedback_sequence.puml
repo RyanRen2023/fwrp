@@ -1,0 +1,67 @@
+@startuml
+actor Consumer as C
+actor Retailer as R
+actor Supplier as S
+participant "FeedbackServlet" as FServlet
+participant "FeedbackService" as FService
+participant "FeedbackDao" as FDao
+database "Database" as DB
+
+== Submit Feedback ==
+C -> FServlet : Submit feedback (rating, feedback text)
+FServlet -> FService : Forward feedback data
+FService -> FDao : Save feedback
+FDao -> DB : Insert feedback record
+DB --> FDao : Feedback saved
+FDao --> FService : Feedback saved confirmation
+FService --> FServlet : Feedback saved confirmation
+FServlet -> C : Feedback submission confirmation
+
+== View Feedback ==
+C -> FServlet : View feedback
+FServlet -> FService : Request feedback data
+FService -> FDao : Retrieve feedback
+FDao -> DB : Query feedback records
+DB --> FDao : Return feedback data
+FDao --> FService : Return feedback data
+FService --> FServlet : Return feedback data
+FServlet -> C : Display feedback
+
+R -> FServlet : View feedback
+FServlet -> FService : Request feedback data
+FService -> FDao : Retrieve feedback
+FDao -> DB : Query feedback records
+DB --> FDao : Return feedback data
+FDao --> FService : Return feedback data
+FService --> FServlet : Return feedback data
+FServlet -> R : Display feedback
+
+S -> FServlet : View feedback
+FServlet -> FService : Request feedback data
+FService -> FDao : Retrieve feedback
+FDao -> DB : Query feedback records
+DB --> FDao : Return feedback data
+FDao --> FService : Return feedback data
+FService --> FServlet : Return feedback data
+FServlet -> S : Display feedback
+
+== Respond to Feedback ==
+R -> FServlet : Respond to feedback
+FServlet -> FService : Forward response data
+FService -> FDao : Save response
+FDao -> DB : Insert response record
+DB --> FDao : Response saved
+FDao --> FService : Response saved confirmation
+FService --> FServlet : Response saved confirmation
+FServlet -> C : Notify consumer of response
+
+S -> FServlet : Respond to feedback
+FServlet -> FService : Forward response data
+FService -> FDao : Save response
+FDao -> DB : Insert response record
+DB --> FDao : Response saved
+FDao --> FService : Response saved confirmation
+FService --> FServlet : Response saved confirmation
+FServlet -> C : Notify consumer of response
+
+@enduml

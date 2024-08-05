@@ -1,0 +1,23 @@
+@startuml
+actor Retailer as R
+actor Consumer as C
+actor CharitableOrganization as CO
+
+
+rectangle InventorySystem {
+    usecase "List Food for Donation" as UC4
+    usecase "View Donation Items" as UC5
+    usecase "Claim Donation Item" as UC6
+    usecase "Update Inventory on Claim" as UC7
+    usecase "Purchase Food Item" as UC8
+    usecase "Update Inventory on Purchase" as UC9
+}
+
+R --> UC4
+CO --> UC5
+CO --> UC6
+R --> UC7
+R --> UC9
+C --> UC8
+
+@enduml

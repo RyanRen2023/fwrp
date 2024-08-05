@@ -57,4 +57,10 @@ public class OrdersService {
     public List<Orders> getAllOrders() {
         return ordersDao.getAllOrders();
     }
+    
+    public List<Orders> getAllOrdersByUserId(int userId) {
+        return ordersDao.getAllOrdersUserId(userId);
+    }
+    
+    
 }

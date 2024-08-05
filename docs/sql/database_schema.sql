@@ -48,13 +48,17 @@ CREATE TABLE food_type (
   name VARCHAR(255) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+drop table orders;
 -- Create Orders table
 CREATE TABLE orders (
   oid INT PRIMARY KEY AUTO_INCREMENT,
-  uid INT DEFAULT NULL,
-  fid INT DEFAULT NULL,
-  money DECIMAL(8,2) DEFAULT NULL,
-  num INT DEFAULT NULL
+  uid INT DEFAULT NULL,  -- User ID
+  fid INT DEFAULT NULL,  -- Food ID
+  money DECIMAL(8,2) DEFAULT NULL,  -- Total amount
+  num INT DEFAULT NULL,  -- Quantity purchased
+  purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Purchase date
+  FOREIGN KEY (uid) REFERENCES user(uid),
+  FOREIGN KEY (fid) REFERENCES food(fid)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- Create Store table
@@ -88,6 +92,19 @@ CREATE TABLE RatingAndFeedback (
     FOREIGN KEY (UserID) REFERENCES user(uid),
     FOREIGN KEY (FoodID) REFERENCES food(fid)
 );
+
+Drop table claims;
+-- Create Claims table
+CREATE TABLE claims (
+    claim_id INT PRIMARY KEY AUTO_INCREMENT,
+    food_id INT,
+    quantity INT,
+    organization_id INT,
+    claim_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (food_id) REFERENCES food(fid),
+    FOREIGN KEY (organization_id) REFERENCES user(uid)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 
 -- Create Advanced Search view
 CREATE VIEW food_search AS

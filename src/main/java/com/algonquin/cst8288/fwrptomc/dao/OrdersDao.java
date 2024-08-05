@@ -92,6 +92,8 @@ public class OrdersDao {
                 order.setFid(rs.getInt("fid"));
                 order.setMoney(rs.getBigDecimal("money"));
                 order.setNum(rs.getInt("num"));
+                order.setPurchaseDate(rs.getDate("purchase_date").toLocalDate());
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,6 +119,29 @@ public class OrdersDao {
                 order.setFid(rs.getInt("fid"));
                 order.setMoney(rs.getBigDecimal("money"));
                 order.setNum(rs.getInt("num"));
+                order.setPurchaseDate(rs.getDate("purchase_date").toLocalDate());
+                ordersList.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ordersList;
+    }
+
+    public List<Orders> getAllOrdersUserId(int userId) {
+        String sql = "SELECT * FROM orders where uid = " + userId;
+        List<Orders> ordersList = new ArrayList<>();
+
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Orders order = new Orders();
+                order.setOid(rs.getInt("oid"));
+                order.setUid(rs.getInt("uid"));
+                order.setFid(rs.getInt("fid"));
+                order.setMoney(rs.getBigDecimal("money"));
+                order.setNum(rs.getInt("num"));
+                order.setPurchaseDate(rs.getDate("purchase_date").toLocalDate());
                 ordersList.add(order);
             }
         } catch (SQLException e) {

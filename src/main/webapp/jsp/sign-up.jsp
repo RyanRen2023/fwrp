@@ -50,9 +50,9 @@
                                 <div class="form-group">
                                     <label for="role">Role</label>
                                     <select class="form-control" id="role" required>
-                                        <option value="Retailer">Retailer</option>
-                                        <option value="CharitableOrganization">Charitable Organization</option>
-                                        <option value="Consumer">Consumer</option>
+                                        <option value="retailer">Retailer</option>
+                                        <option value="organization">Charitable Organization</option>
+                                        <option value="consumer">Consumer</option>
                                     </select>
                                 </div>
                                 <!-- Retailer Specific Fields -->

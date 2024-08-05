@@ -1,0 +1,32 @@
+@startuml
+actor Consumer as C
+actor CharitableOrganization as CO
+actor Retailer as R
+
+participant "InventoryServlet" as IServlet
+participant "InventoryService" as IService
+participant "InventoryDao" as IDao
+
+database "Database" as DB
+
+== Purchase Food Item ==
+C -> IServlet : Purchase food item
+IServlet -> IService : Forward purchase request
+IService -> IDao : Update inventory
+IDao -> DB : Update food inventory
+DB --> IDao : Inventory updated
+IDao --> IService : Inventory update confirmation
+IService --> IServlet : Inventory update confirmation
+IServlet -> C : Purchase confirmation
+
+== Claim Donation Item ==
+CO -> IServlet : Claim donation item
+IServlet -> IService : Forward claim request
+IService -> IDao : Update inventory
+IDao -> DB : Update food inventory
+DB --> IDao : Inventory updated
+IDao --> IService : Inventory update confirmation
+IService --> IServlet : Inventory update confirmation
+IServlet -> CO : Claim confirmation
+
+@enduml

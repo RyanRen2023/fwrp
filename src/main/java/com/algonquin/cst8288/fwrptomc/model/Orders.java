@@ -5,6 +5,7 @@
 package com.algonquin.cst8288.fwrptomc.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Orders {
     private int fid;
     private BigDecimal money;
     private int num;
+    private LocalDate purchaseDate;
 
     // Getters and Setters
     public int getOid() {
@@ -57,4 +59,14 @@ public class Orders {
     public void setNum(int num) {
         this.num = num;
     }
+
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+    
+    
 }

@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-center">
-                            <a href="sign-up.jsp">Don't have an account? Register here</a>
+                            <a href="<%= request.getContextPath()%>/jsp/sign-up.jsp">Don't have an account? Register here</a>
                         </div>
                     </div>
                 </div>

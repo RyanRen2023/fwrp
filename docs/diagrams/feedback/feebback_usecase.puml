@@ -1,0 +1,23 @@
+@startuml
+
+actor Retailer as R
+actor Consumer as C
+actor Supplier as S
+
+rectangle FeedbackSystem {
+    usecase "Submit Feedback" as UC1
+    usecase "View Feedback" as UC2
+    usecase "Respond to Feedback" as UC3
+}
+
+R --> UC2
+R --> UC3
+
+
+C --> UC1
+C --> UC2
+
+S --> UC2
+S --> UC3
+
+@enduml

@@ -253,3 +253,13 @@ a:hover {
     font-size: 14px;
     box-sizing: border-box;
 }
+
+.modal-dialog-custom {
+    max-width: 80%; 
+}
+
+.card-header-custom {
+    color: black;
+    background-color: #97de8e
+}
+

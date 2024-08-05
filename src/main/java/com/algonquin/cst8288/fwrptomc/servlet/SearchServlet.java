@@ -43,7 +43,6 @@ public class SearchServlet extends HttpServlet {
         } else {
             // Show search page
             request.setAttribute("searchPage", "searchPage");
-
             request.getRequestDispatcher("/jsp/search.jsp").forward(request, response);
         }
     }
