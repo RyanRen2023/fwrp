@@ -72,7 +72,7 @@ public class InventoryServlet extends HttpServlet {
     }
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) {
         try {
-            request.getRequestDispatcher("/view/add.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/add.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
