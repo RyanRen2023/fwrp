@@ -7,10 +7,6 @@ package com.algonquin.cst8288.fwrptomc.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/**
- *
- * @author renxihai
- */
 public class Food {
     private int fid;
     private String fname;
