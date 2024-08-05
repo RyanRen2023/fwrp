@@ -133,4 +133,41 @@ public class FoodDao {
         }
         return foodList;
     }
+    
+    public List<Food> getFoodsByDonatestate(boolean isDonated) {
+        String sql = "SELECT * FROM food where is_donate = '0' ";
+
+        if (isDonated) {
+            sql = "SELECT * FROM food where is_donate = '1'";
+        }
+        List<Food> foods = new ArrayList<>();
+
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Food food = new Food();
+                food.setFid(rs.getInt("fid"));
+                food.setFname(rs.getString("fname"));
+                food.setExpiration(rs.getDate("expiration").toLocalDate());
+                food.setPrice(rs.getBigDecimal("price"));
+                food.setInventory(rs.getInt("inventory"));
+                food.setDiscount(rs.getDouble("discount"));
+                food.setFtid(rs.getInt("ftid"));
+                food.setIsDonate(rs.getInt("is_donate"));
+                food.setStoreId(rs.getInt("store_id"));
+                foods.add(food);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return foods;
+    }
+
+    public List<Food> getAllFoodsForDonation() {
+        return this.getFoodsByDonatestate(true);
+    }
+
+    public List<Food> getAllFoodsForPurchase() {
+        return this.getFoodsByDonatestate(false);
+    }
 }
