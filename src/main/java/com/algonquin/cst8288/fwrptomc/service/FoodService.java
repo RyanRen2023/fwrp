@@ -57,12 +57,4 @@ public class FoodService {
     public List<Food> getAllFoods() {
         return foodDao.getAllFoods();
     }
-
-    public List<Food> getFoodForDonation() {
-        return foodDao.getAllFoodsForDonation();
-    }
-
-    public List<Food> getFoodForPurchase() {
-        return foodDao.getAllFoodsForPurchase();
-    }
 }
