@@ -264,4 +264,18 @@ public class FoodDao {
         }
         return foodList;
     }
+
+    public int getTotalListedItemsByRetailerId(int retailerId) {
+        String sql = "SELECT COUNT(*) FROM food f JOIN store s ON f.store_id = s.store_id WHERE s.uid = ?";
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, retailerId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

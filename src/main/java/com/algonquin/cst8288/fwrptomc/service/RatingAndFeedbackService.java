@@ -57,4 +57,8 @@ public class RatingAndFeedbackService {
     public List<RatingAndFeedback> getAllRatingsAndFeedback() {
         return ratingAndFeedbackDao.getAllRatingsAndFeedback();
     }
+
+    public List<RatingAndFeedback> getAllRatingsAndFeedbackByUserId(int userId) {
+        return ratingAndFeedbackDao.getAllRatingsAndFeedbackByUserId(userId);
+    }
 }

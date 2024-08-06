@@ -149,4 +149,73 @@ public class ClaimDao {
 
         return claims;
     }
+
+    /**
+     * Retrieve the total number of claims by organization ID
+     *
+     * @param organizationId the organization ID
+     * @return the total number of claims
+     */
+    public int getTotalClaimsByOrganizationId(int organizationId) {
+        String sql = "SELECT COUNT(*) FROM claims WHERE organization_id = ?";
+        int totalClaims = 0;
+
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, organizationId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                totalClaims = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalClaims;
+    }
+
+    /**
+     * Retrieve the most claimed food item by organization ID
+     *
+     * @param organizationId the organization ID
+     * @return the most claimed food item name
+     */
+    public String getMostClaimedFoodItemByOrganizationId(int organizationId) {
+        String sql = "SELECT f.fname, SUM(c.quantity) AS total_quantity "
+                + "FROM claims c "
+                + "JOIN food f ON c.food_id = f.fid "
+                + "WHERE c.organization_id = ? "
+                + "GROUP BY f.fname "
+                + "ORDER BY total_quantity DESC "
+                + "LIMIT 1";
+        String mostClaimedFoodItem = null;
+
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, organizationId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                mostClaimedFoodItem = rs.getString("fname");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mostClaimedFoodItem;
+    }
+    
+    public int getTotalDonatedItemsByRetailerId(int retailerId) {
+        String sql = "SELECT COUNT(*) FROM claims WHERE organization_id IN (SELECT uid FROM user WHERE user_type = 'retailer' AND uid = ?)";
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, retailerId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

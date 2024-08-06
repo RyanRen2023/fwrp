@@ -130,4 +130,44 @@ public class RatingAndFeedbackDao {
 
         return ratingsAndFeedback;
     }
+
+    public List<RatingAndFeedback> getAllRatingsAndFeedbackByUserId(int userId) {
+        String sql = "SELECT * FROM RatingAndFeedback where userId = " + userId;
+        List<RatingAndFeedback> ratingsAndFeedback = new ArrayList<>();
+
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                RatingAndFeedback ratingAndFeedback = new RatingAndFeedback();
+                ratingAndFeedback.setRatingID(rs.getInt("RatingID"));
+                ratingAndFeedback.setUserID(rs.getInt("UserID"));
+                ratingAndFeedback.setFoodID(rs.getInt("FoodID"));
+                ratingAndFeedback.setRating(rs.getInt("Rating"));
+                ratingAndFeedback.setReview(rs.getString("Review"));
+                ratingAndFeedback.setCreatedAt(rs.getTimestamp("CreatedAt").toLocalDateTime());
+                ratingsAndFeedback.add(ratingAndFeedback);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ratingsAndFeedback;
+    }
+
+    public int getTotalFeedbackByUserId(int userId) {
+        String sql = "SELECT COUNT(*) AS total_feedback FROM RatingAndFeedback WHERE UserID = ?";
+        int totalFeedback = 0;
+
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                totalFeedback = rs.getInt("total_feedback");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalFeedback;
+    }
 }
