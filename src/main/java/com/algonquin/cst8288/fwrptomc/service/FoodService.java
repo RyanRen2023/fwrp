@@ -7,7 +7,7 @@ import java.util.List;
 
 public class FoodService {
 
-    private FoodDao foodDao;
+    FoodDao foodDao;
 
     public FoodService() {
         this.foodDao = new FoodDao(); // Initialize the DAO
