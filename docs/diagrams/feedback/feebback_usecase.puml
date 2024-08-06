@@ -2,7 +2,7 @@
 
 actor Retailer as R
 actor Consumer as C
-actor Supplier as S
+actor Organization as S
 
 rectangle FeedbackSystem {
     usecase "Submit Feedback" as UC1

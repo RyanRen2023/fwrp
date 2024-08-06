@@ -44,6 +44,9 @@
             <a class="nav-link" href="<%= request.getContextPath()%>/purchase-claim">Claim Food</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/notifications">Notifications</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/subscribe-alerts">Subscribe to Alerts</a>
+            <a class="nav-link" href="<%= request.getContextPath()%>/search">Search</a>
+            <a class="nav-link" href="<%= request.getContextPath()%>/feedback">Feedback</a>
+
         </nav>
     </c:when>
     <c:when test="${loggedInUser.userType == 'retailer'}">

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Filter.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.filter;
 
 import com.algonquin.cst8288.fwrptomc.service.AuthService;
@@ -17,87 +13,47 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author renxihai
- */
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"/*"})
 public class AuthFilter implements Filter {
 
-    private static final boolean debug = true;
-
     private AuthService authService;
 
-    private static final Logger logger = Logger.getLogger(AuthFilter.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
-    public AuthFilter() {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        authService = new AuthServiceImpl();
+        logger.info("AuthFilter initialized.");
     }
 
-    public void setAuthService(AuthService authService) {
-        this.authService = authService;
-    }
-
-    private void initialize() {
-        if (this.authService == null) {
-            this.authService = new AuthServiceImpl();
-        }
-    }
-
-    /**
-     *
-     * @param servletRequest
-     * @param servletResponse
-     * @param chain The filter chain we are processing
-     *
-     * @exception IOException if an input/output error occurs
-     * @exception ServletException if a servlet error occurs
-     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-            FilterChain chain)
-            throws IOException, ServletException {
-
-        initialize(); // Ensure authService is initialized
-
-        if (debug) {
-            logger.info("AuthFilter:doFilter()");
-
-        }
+            FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
-        String loginRequestURI = request.getContextPath() + "/login";
-
         String loginURI = request.getContextPath() + "/jsp/login.jsp";
+        boolean loggedIn = session != null && session.getAttribute("loggedInUser") != null;
+        boolean loginRequest = request.getRequestURI().equals(loginURI) || request.getRequestURI().equals(request.getContextPath() + "/login");
 
-        boolean loggedIn = session != null && authService.isUserLoggedIn();
-        boolean loginRequest = request.getRequestURI().equals(loginURI) || request.getRequestURI().equals(loginRequestURI);
+        logger.info("Filtering request: {}", request.getRequestURI());
+        logger.info("Logged in: {}", loggedIn);
+        logger.info("Login request: {}", loginRequest);
 
-        logger.info("Filtering request: " + request.getRequestURI());
-        logger.info("Logged in: " + loggedIn);
-        logger.info("Login request: " + loginRequest);
-        chain.doFilter(request, response);
-
-//        if (loggedIn || loginRequest) {
-//            chain.doFilter(request, response);
-//        } else {
-//            response.sendRedirect(loginURI);
-//            return; // 
-//        }
+        if (loggedIn || loginRequest) {
+            chain.doFilter(request, response);
+        } else {
+            response.sendRedirect(loginURI);
+        }
     }
 
     @Override
     public void destroy() {
-        Filter.super.destroy();
+        logger.info("AuthFilter destroyed.");
     }
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        Filter.super.init(filterConfig);
-    }
-
 }

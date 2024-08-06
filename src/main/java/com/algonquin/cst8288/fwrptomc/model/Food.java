@@ -12,6 +12,7 @@ import java.time.LocalDate;
  * @author renxihai
  */
 public class Food {
+
     private int fid;
     private String fname;
     private LocalDate expiration;
@@ -21,6 +22,7 @@ public class Food {
     private int ftid;
     private int isDonate;
     private int storeId;
+    private int isSurplus;
 
     public Food() {
     }
@@ -36,6 +38,7 @@ public class Food {
         this.isDonate = isDonate;
         this.storeId = storeId;
     }
+
     public Food(String fname, LocalDate expiration, BigDecimal price, int inventory, Double discount, int ftid, int isDonate, int storeId) {
         this.fname = fname;
         this.expiration = expiration;
@@ -120,18 +123,20 @@ public class Food {
         this.storeId = storeId;
     }
 
+    
+    public int isIsSurplus() {
+        return isSurplus;
+    }
+
+    public void setIsSurplus(int isSurplus) {
+        this.isSurplus = isSurplus;
+    }
+
     @Override
     public String toString() {
-        return "Food{" +
-                "fid=" + fid +
-                ", fname='" + fname + '\'' +
-                ", expiration=" + expiration +
-                ", price=" + price +
-                ", inventory=" + inventory +
-                ", discount=" + discount +
-                ", ftid=" + ftid +
-                ", isDonate=" + isDonate +
-                ", storeId=" + storeId +
-                '}';
+        return "Food{" + "fid=" + fid + ", fname=" + fname + ", expiration=" + expiration + ", price=" + price + ", inventory=" + inventory + ", discount=" + discount + ", ftid=" + ftid + ", isDonate=" + isDonate + ", storeId=" + storeId + ", isSurplus=" + isSurplus + '}';
     }
+    
+    
+
 }

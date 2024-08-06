@@ -149,7 +149,7 @@ public class SubscribeDao {
 
     public List<Subscribe> findByAlertType(String alertType) {
         List<Subscribe> subscribes = new ArrayList<>();
-        String sql = "SELECT * FROM subscribes WHERE alertType LIKE ?";
+        String sql = "SELECT * FROM subscribe WHERE alert_type LIKE ?";
 
         try (Connection conn = jdbcClient.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -159,7 +159,7 @@ public class SubscribeDao {
                 while (rs.next()) {
                     Subscribe subscribe = new Subscribe();
                     subscribe.setSid(rs.getInt("sid"));
-                    subscribe.setAlertType(rs.getString("alertType"));
+                    subscribe.setAlertType(rs.getString("alert_type"));
                     subscribe.setEmail(rs.getString("email"));
                     subscribes.add(subscribe);
                 }

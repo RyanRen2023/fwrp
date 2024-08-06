@@ -5,7 +5,9 @@
 package com.algonquin.cst8288.fwrptomc.servlet;
 
 import com.algonquin.cst8288.fwrptomc.model.FoodSearch;
+import com.algonquin.cst8288.fwrptomc.model.FoodType;
 import com.algonquin.cst8288.fwrptomc.service.FoodSearchService;
+import com.algonquin.cst8288.fwrptomc.service.FoodTypeService;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SearchServlet extends HttpServlet {
 
     private FoodSearchService foodSearchService = new FoodSearchService();
+    private FoodTypeService foodTypeService = new FoodTypeService();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,6 +45,9 @@ public class SearchServlet extends HttpServlet {
             performSearch(request, response);
         } else {
             // Show search page
+            List<FoodType> foodTypeList = foodTypeService.getAllFoodTypes();
+            request.setAttribute("foodTypeList", foodTypeList);
+
             request.setAttribute("searchPage", "searchPage");
             request.getRequestDispatcher("/jsp/search.jsp").forward(request, response);
         }
@@ -56,6 +62,9 @@ public class SearchServlet extends HttpServlet {
         String expiration = request.getParameter("expiration");
         String supplier = request.getParameter("supplier");
         String location = request.getParameter("location");
+
+        List<FoodType> foodTypeList = foodTypeService.getAllFoodTypes();
+        request.setAttribute("foodTypeList", foodTypeList);
 
         // Perform search using SearchService
         // Perform search using FoodSearchService

@@ -16,6 +16,7 @@ public class FoodService {
     public void add(Food food) {
         foodDao.add(food);
     }
+
     public void updateFood(Food food) {
         foodDao.update(food);
     }
@@ -31,12 +32,28 @@ public class FoodService {
     public List<Food> getAllFoods(String search) {
         return foodDao.getAllFoods(search);
     }
-    
-        public List<Food> getFoodForDonation() {
+
+    public List<Food> getAllFoods() {
+        return foodDao.getAllFoods();
+    }
+
+    public List<Food> getFoodForDonation() {
         return foodDao.getAllFoodsForDonation();
     }
 
     public List<Food> getFoodForPurchase() {
         return foodDao.getAllFoodsForPurchase();
+    }
+
+    public void markFoodAsSurplus(int foodId, int isSurplus, int isDonation) {
+        foodDao.updateFoodSurplusStatus(foodId, isSurplus, isDonation);
+    }
+
+    public List<Food> getFoodsFromOrdersByUserId(int userId) {
+        return foodDao.getFoodsFromOrdersByUserId(userId);
+    }
+
+    public List<Food> getFoodsFromClaimsByOrganizationId(int organizationId) {
+        return foodDao.getFoodsFromClaimsByOrganizationId(organizationId);
     }
 }

@@ -29,11 +29,10 @@
                         <div class="filter-group">
                             <label for="food-type">Food Type</label>
                             <select id="food-type" class="form-control" name="foodType">
-                                <option value="">Select Type</option>
-                                <option value="vegetables">Vegetables</option>
-                                <option value="fruits">Fruits</option>
-                                <option value="meat">Meat</option>
-                                <option value="dairy">Dairy</option>
+                                <option value="">Select Type</option>                         
+                                <c:forEach var="type" items="${foodTypeList}">
+                                    <option value="${type.name}">${type.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="filter-group">

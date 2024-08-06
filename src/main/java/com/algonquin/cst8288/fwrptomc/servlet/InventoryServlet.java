@@ -34,13 +34,13 @@ public class InventoryServlet extends HttpServlet {
 
         switch (actionUser) {
             case "add":
-                performAdd (request, response);
+                performAdd(request, response);
                 break;
             case "update":
-                performUpdate (request, response);
+                performUpdate(request, response);
                 break;
             case "delete":
-                performDelete (request, response);
+                performDelete(request, response);
                 break;
             default:
                 break;
@@ -53,23 +53,24 @@ public class InventoryServlet extends HttpServlet {
             actionUser = "";
         }
         String expiration = request.getParameter("expiration");
-        request.setAttribute("expiration",expiration);
+        request.setAttribute("expiration", expiration);
         switch (actionUser) {
             case "add":
-                showAddForm (request, response);
+                showAddForm(request, response);
                 break;
             case "update":
-               showUpdateForm(request, response);
+                showUpdateForm(request, response);
                 break;
             default:
                 try {
-                    listFood (request, response,expiration);
+                    listFood(request, response, expiration);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
                 break;
         }
     }
+
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.getRequestDispatcher("/jsp/add.jsp").forward(request, response);
@@ -77,6 +78,7 @@ public class InventoryServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     private void performDelete(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("fid"));
         Food food = foodService.getFoodById(id);
@@ -87,6 +89,7 @@ public class InventoryServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     private void performAdd(HttpServletRequest request, HttpServletResponse response) {
         String fname = request.getParameter("fname");
         String expirationStr = request.getParameter("expiration");
@@ -111,13 +114,15 @@ public class InventoryServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-    private void listFood(HttpServletRequest request, HttpServletResponse response,String search)
+
+    private void listFood(HttpServletRequest request, HttpServletResponse response, String search)
             throws SQLException, ServletException, IOException {
         List<Food> foodList = foodService.getAllFoods(search);
         request.setAttribute("foodList", foodList);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/inventory.jsp");
         dispatcher.forward(request, response);
     }
+
     private void showUpdateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Food food = foodService.getFoodById(id);
@@ -128,6 +133,7 @@ public class InventoryServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     private void performUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int fid = Integer.parseInt(request.getParameter("fid"));
         String fname = request.getParameter("fname");
@@ -156,7 +162,5 @@ public class InventoryServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
-
 
 }

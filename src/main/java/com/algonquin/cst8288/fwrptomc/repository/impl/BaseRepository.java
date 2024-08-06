@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class BaseRepository {
     private static ThreadLocal<Connection> connectionHolder = new ThreadLocal<>();
     private static String jdbcURL = "jdbc:mysql://localhost:3306/fwrp";
-    private static String jdbcUsername = "root";
-    private static String jdbcPassword = "password";
+    private static String jdbcUsername = "fwrp";
+    private static String jdbcPassword = "fwrpfwrp";
     private static Connection connection;
 
     public static Connection getConnection() {

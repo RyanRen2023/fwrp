@@ -56,6 +56,10 @@ public class PurchaseClaimServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         HttpSession session = request.getSession(false);
+        if (session == null) {
+            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+            return;
+        }
         User currentUser = (User) session.getAttribute("loggedInUser");
         if (currentUser == null) {
             request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
@@ -151,23 +155,21 @@ public class PurchaseClaimServlet extends HttpServlet {
 
         BigDecimal discountedPrice = price.multiply(BigDecimal.ONE.subtract(discount));
         BigDecimal money = discountedPrice.multiply(quantity);
-        
+
         order.setFid(foodId);
         order.setMoney(money);
         order.setNum(quantity.intValue());
         order.setUid(user.getUid());
         ordersService.addOrder(order);
-        
+
         int newInventory = food.getInventory() - quantity.intValue();
         food.setInventory(newInventory);
         foodService.updateFood(food);
-        
-        
 
         // Add purchase logic here, similar to claim process
 //        foodService.updateInventoryAfterPurchase(foodId);
     }
-    
+
     private JsonObject requestJsonObj(HttpServletRequest request) throws IOException, JsonSyntaxException {
         // Read JSON data from request
         StringBuilder sb = new StringBuilder();

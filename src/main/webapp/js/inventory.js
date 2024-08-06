@@ -1,4 +1,3 @@
-const inventory = [];
 const itemModal = new bootstrap.Modal(document.getElementById('itemModal'));
 
 function showAddModal() {
@@ -10,9 +9,9 @@ function showAddModal() {
 
 function showEditModal(id) {
     document.getElementById('modalTitle').innerText = 'Edit Item';
-    document.getElementById('itemName').value = inventory[id].name;
-    document.getElementById('quantity').value = inventory[id].quantity;
-    document.getElementById('expirationDate').value = inventory[id].expirationDate;
+    document.getElementById('itemName').value = inventory[id].fname;
+    document.getElementById('quantity').value = inventory[id].inventory;
+    document.getElementById('expirationDate').value = inventory[id].expiration;
     document.getElementById('price').value = inventory[id].price;
     document.getElementById('discount').value = inventory[id].discount;
     document.getElementById('itemId').value = id;
@@ -20,14 +19,14 @@ function showEditModal(id) {
 }
 
 function saveItem() {
-    const name = document.getElementById('itemName').value;
-    const quantity = document.getElementById('quantity').value;
-    const expirationDate = document.getElementById('expirationDate').value;
+    const fname = document.getElementById('itemName').value;
+    const inventory = document.getElementById('quantity').value;
+    const expiration = document.getElementById('expirationDate').value;
     const price = document.getElementById('price').value;
     const discount = document.getElementById('discount').value;
     const itemId = document.getElementById('itemId').value;
 
-    const item = { name, quantity, expirationDate, price, discount };
+    const item = { fname, inventory, expiration, price, discount };
 
     if (itemId) {
         inventory[itemId] = item;
@@ -51,9 +50,9 @@ function updateInventoryTable() {
     inventory.forEach((item, id) => {
         const row = `
             <tr>
-                <td>${item.name}</td>
-                <td>${item.quantity}</td>
-                <td>${item.expirationDate}</td>
+                <td>${item.fname}</td>
+                <td>${item.inventory}</td>
+                <td>${item.expiration}</td>
                 <td>${item.price}</td>
                 <td>${item.discount}</td>
                 <td>
@@ -66,7 +65,3 @@ function updateInventoryTable() {
     });
 }
 
-function logout() {
-    // Implement logout functionality
-    alert('Logging out...');
-}

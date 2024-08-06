@@ -60,19 +60,32 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.6.0</version>
             <scope>test</scope>
-        </dependency>
-        
+        </dependency>        
         
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>4.3.1</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>    
+        
 
-       
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
         
-        
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 
     </dependencies>
     
