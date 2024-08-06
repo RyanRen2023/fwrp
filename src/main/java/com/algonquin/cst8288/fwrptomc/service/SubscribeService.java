@@ -4,6 +4,7 @@ import com.algonquin.cst8288.fwrptomc.dao.SubscribeDao;
 import com.algonquin.cst8288.fwrptomc.model.Subscribe;
 import java.util.List;
 
+
 public class SubscribeService {
 
     private SubscribeDao subscribeDao;
