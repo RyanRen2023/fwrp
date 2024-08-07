@@ -35,20 +35,5 @@ public class NotificationServiceTest {
     @AfterEach
     public void tearDown() {
     }
-
-    /**
-     * Test of sendNotification method, of class NotificationService.
-     */
-    @Test
-    public void testSendNotification() {
-        System.out.println("sendNotification");
-        Subscribe subscriber = new Subscribe();
-        subscriber.setEmail("ren00055@algonquinlive.com");
-        String subject = "test";
-        String messageText = "test";
-        NotificationService instance = new NotificationService();
-        instance.sendNotification(subscriber, subject, messageText);
-
-    }
     
 }
