@@ -29,7 +29,7 @@
 <c:choose>
     <c:when test="${loggedInUser.userType == 'consumer'}">
         <nav class="sidebar">
-            <a class="navbar-brand" href="<%= request.getContextPath()%>/dashboard">Food Waste Reduction</a>
+            <a class="navbar-brand" href="<%= request.getContextPath()%>/consumer-dashboard">Dashboard</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/purchase-claim">Purchase Surplus Food</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/notifications">Notifications</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/subscribe-alerts">Subscribe to Alerts</a>
@@ -40,7 +40,7 @@
     </c:when>
     <c:when test="${loggedInUser.userType == 'organization'}">
         <nav class="sidebar">
-            <a class="navbar-brand" href="<%= request.getContextPath()%>/dashboard">Food Waste Reduction</a>
+            <a class="navbar-brand" href="<%= request.getContextPath()%>/organization-dashboard">Food Waste Reduction</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/purchase-claim">Claim Food</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/notifications">Notifications</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/subscribe-alerts">Subscribe to Alerts</a>
@@ -51,7 +51,7 @@
     </c:when>
     <c:when test="${loggedInUser.userType == 'retailer'}">
         <nav class="sidebar">
-            <a class="navbar-brand" href="<%= request.getContextPath()%>/dashboard">Food Waste Reduction</a>
+            <a class="navbar-brand" href="<%= request.getContextPath()%>/retailer-dashboard">Food Waste Reduction</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/inventory">Manage Inventory</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/surplus-food">Identify Surplus Food</a>
             <a class="nav-link" href="<%= request.getContextPath()%>/notifications">Notifications</a>

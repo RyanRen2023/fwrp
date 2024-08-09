@@ -1,15 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- *
- * @author renxihai
+ * Model class representing a food item.
+ * 
+ * This class holds data related to a food item such as its ID, name, expiration date,
+ * price, inventory count, discount, food type ID, donation status, store ID, and surplus status.
+ * It provides constructors, getters, setters, and a toString method for better readability.
+ * 
+ * Author: Xihai Ren
  */
 public class Food {
 
@@ -24,9 +25,25 @@ public class Food {
     private int storeId;
     private int isSurplus;
 
+    /**
+     * Default constructor.
+     */
     public Food() {
     }
 
+    /**
+     * Constructs a new Food object with the specified values.
+     *
+     * @param fid the ID of the food item
+     * @param fname the name of the food item
+     * @param expiration the expiration date of the food item
+     * @param price the price of the food item
+     * @param inventory the inventory count of the food item
+     * @param discount the discount applied to the food item
+     * @param ftid the food type ID
+     * @param isDonate the donation status (1 if the item is for donation, 0 otherwise)
+     * @param storeId the ID of the store associated with the food item
+     */
     public Food(int fid, String fname, LocalDate expiration, BigDecimal price, int inventory, Double discount, int ftid, int isDonate, int storeId) {
         this.fid = fid;
         this.fname = fname;
@@ -39,6 +56,18 @@ public class Food {
         this.storeId = storeId;
     }
 
+    /**
+     * Constructs a new Food object without specifying the food ID.
+     *
+     * @param fname the name of the food item
+     * @param expiration the expiration date of the food item
+     * @param price the price of the food item
+     * @param inventory the inventory count of the food item
+     * @param discount the discount applied to the food item
+     * @param ftid the food type ID
+     * @param isDonate the donation status (1 if the item is for donation, 0 otherwise)
+     * @param storeId the ID of the store associated with the food item
+     */
     public Food(String fname, LocalDate expiration, BigDecimal price, int inventory, Double discount, int ftid, int isDonate, int storeId) {
         this.fname = fname;
         this.expiration = expiration;
@@ -51,6 +80,7 @@ public class Food {
     }
 
     // Getters and Setters
+
     public int getFid() {
         return fid;
     }
@@ -123,8 +153,7 @@ public class Food {
         this.storeId = storeId;
     }
 
-    
-    public int isIsSurplus() {
+    public int getIsSurplus() {
         return isSurplus;
     }
 
@@ -132,11 +161,13 @@ public class Food {
         this.isSurplus = isSurplus;
     }
 
+    /**
+     * Returns a string representation of the Food object.
+     *
+     * @return a string representation of the object
+     */
     @Override
     public String toString() {
         return "Food{" + "fid=" + fid + ", fname=" + fname + ", expiration=" + expiration + ", price=" + price + ", inventory=" + inventory + ", discount=" + discount + ", ftid=" + ftid + ", isDonate=" + isDonate + ", storeId=" + storeId + ", isSurplus=" + isSurplus + '}';
     }
-    
-    
-
 }

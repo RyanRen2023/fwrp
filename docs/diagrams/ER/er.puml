@@ -1,6 +1,7 @@
 @startuml
-entity "User" as user {
-  * uid : INT <<PK>>
+
+entity user {
+  * uid : INT
   --
   name : VARCHAR(20)
   email : VARCHAR(50)
@@ -9,8 +10,8 @@ entity "User" as user {
   last_login : DATETIME
 }
 
-entity "Food" as food {
-  * fid : INT <<PK>>
+entity food {
+  * fid : INT
   --
   fname : VARCHAR(50)
   expiration : DATE
@@ -20,71 +21,81 @@ entity "Food" as food {
   ftid : INT
   is_donate : INT
   store_id : INT
+  is_surplus : TINYINT
 }
 
-entity "FoodType" as food_type {
-  * id : INT <<PK>>
+entity food_type {
+  * id : INT
   --
   name : VARCHAR(255)
 }
 
-entity "Orders" as orders {
-  * oid : INT <<PK>>
+entity orders {
+  * oid : INT
   --
-  uid : INT <<FK>>
-  fid : INT <<FK>>
+  uid : INT
+  fid : INT
   money : DECIMAL(8,2)
   num : INT
   purchase_date : TIMESTAMP
 }
 
-entity "Store" as store {
-  * store_id : INT <<PK>>
+entity store {
+  * store_id : INT
   --
   store_name : VARCHAR(50)
   city : VARCHAR(50)
-  uid : INT <<FK>>
+  uid : INT
 }
 
-entity "Subscribe" as subscribe {
-  * sid : INT <<PK>>
+entity subscribe {
+  * sid : INT
   --
-  uid : INT <<FK>>
-  fid : INT <<FK>>
+  uid : INT
+  fid : INT
   create_time : DATE
   alert_type : VARCHAR(255)
   email : VARCHAR(255)
 }
 
-entity "RatingAndFeedback" as rating_and_feedback {
-  * RatingID : INT <<PK>>
+entity RatingAndFeedback {
+  * RatingID : INT
   --
-  UserID : INT <<FK>>
-  FoodID : INT <<FK>>
+  UserID : INT
+  FoodID : INT
   Rating : INT
   Review : TEXT
   CreatedAt : TIMESTAMP
 }
 
-entity "Claims" as claims {
-  * claim_id : INT <<PK>>
+entity claims {
+  * claim_id : INT
   --
-  food_id : INT <<FK>>
+  food_id : INT
   quantity : INT
-  organization_id : INT <<FK>>
+  organization_id : INT
   claim_date : TIMESTAMP
 }
 
+entity email_notifications {
+  * notification_id : INT
+  --
+  recipient_email : VARCHAR(255)
+  subject : VARCHAR(255)
+  message : TEXT
+  sent_at : TIMESTAMP
+}
+
 user ||--o{ orders : "uid"
-food ||--o{ orders : "fid"
 user ||--o{ subscribe : "uid"
-food ||--o{ subscribe : "fid"
-user ||--o{ rating_and_feedback : "UserID"
-food ||--o{ rating_and_feedback : "FoodID"
+user ||--o{ RatingAndFeedback : "UserID"
 user ||--o{ claims : "organization_id"
-food ||--o{ claims : "food_id"
-food_type ||--o{ food : "ftid"
-store ||--o{ food : "store_id"
 user ||--o{ store : "uid"
+food_type ||--o{ food : "ftid"
+food ||--o{ orders : "fid"
+food ||--o{ subscribe : "fid"
+food ||--o{ RatingAndFeedback : "FoodID"
+food ||--o{ claims : "food_id"
+store ||--o{ food : "store_id"
 
 @enduml

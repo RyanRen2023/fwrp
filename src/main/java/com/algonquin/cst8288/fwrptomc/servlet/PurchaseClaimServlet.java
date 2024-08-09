@@ -32,8 +32,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Servlet that handles requests for purchasing and claiming food items.
  *
- * @author renxihai
+ * <p>
+ * This servlet processes both GET and POST requests. Depending on the user's
+ * type (organization or consumer) and the action parameter, it processes food
+ * claims, purchases, or views available food items.
+ * </p>
+ *
+ * <p>
+ * URL Patterns:
+ * <ul>
+ * <li>/purchase-claim</li>
+ * </ul>
+ * </p>
+ *
+ * @author Xihai Ren
  */
 @WebServlet(name = "PurchaseClaimServlet", urlPatterns = {"/purchase-claim"})
 public class PurchaseClaimServlet extends HttpServlet {
@@ -46,8 +60,10 @@ public class PurchaseClaimServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -88,6 +104,16 @@ public class PurchaseClaimServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Processes the viewing of purchase orders for a consumer.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @param uid the user ID of the consumer
+     * @throws IOException if an I/O error occurs
+     */
     private void processViewPurchase(HttpServletRequest request, HttpServletResponse response, int uid) throws IOException {
         List<Orders> orders = ordersService.getAllOrdersByUserId(uid);
         response.setContentType("application/json");
@@ -103,6 +129,16 @@ public class PurchaseClaimServlet extends HttpServlet {
         response.getWriter().write(gson.toJson(orders));
     }
 
+    /**
+     * Processes the viewing of claims for an organization.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @param oid the organization ID
+     * @throws IOException if an I/O error occurs
+     */
     private void processViewClaims(HttpServletRequest request, HttpServletResponse response, int oid) throws IOException {
         List<Claim> claims = claimService.getClaimsByOrganizationId(oid);
         response.setContentType("application/json");
@@ -119,18 +155,49 @@ public class PurchaseClaimServlet extends HttpServlet {
         response.getWriter().write(gson.toJson(claims));
     }
 
+    /**
+     * Processes the viewing of available food for donation.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private void processDonation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Food> foodList = foodService.getFoodForDonation();
         request.setAttribute("foodList", foodList);
         request.getRequestDispatcher("/jsp/purchase-claim.jsp").forward(request, response);
     }
 
+    /**
+     * Processes the viewing of available food for purchase by consumers.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private void processAvailableFood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Food> foodList = foodService.getFoodForPurchase();
         request.setAttribute("foodList", foodList);
         request.getRequestDispatcher("/jsp/purchase-claim.jsp").forward(request, response);
     }
 
+    /**
+     * Processes a claim for food items by an organization.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @param user the User object representing the logged-in organization
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private void processClaim(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
         int foodId = Integer.parseInt(request.getParameter("foodId"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -145,6 +212,17 @@ public class PurchaseClaimServlet extends HttpServlet {
         processDonation(request, response);
     }
 
+    /**
+     * Processes a purchase of food items by a consumer.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @param user the User object representing the logged-in consumer
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private void processPurchase(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
         int foodId = Integer.parseInt(request.getParameter("purchase-foodId"));
         Food food = foodService.getFoodById(foodId);
@@ -170,6 +248,15 @@ public class PurchaseClaimServlet extends HttpServlet {
 //        foodService.updateInventoryAfterPurchase(foodId);
     }
 
+    /**
+     * Parses a JSON object from the request body.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @return a JsonObject containing the parsed JSON data
+     * @throws IOException if an I/O error occurs while reading the request body
+     * @throws JsonSyntaxException if the JSON data is not well-formed
+     */
     private JsonObject requestJsonObj(HttpServletRequest request) throws IOException, JsonSyntaxException {
         // Read JSON data from request
         StringBuilder sb = new StringBuilder();

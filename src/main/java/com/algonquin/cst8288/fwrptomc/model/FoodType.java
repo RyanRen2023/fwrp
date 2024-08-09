@@ -1,12 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.model;
 
 /**
- *
- * @author renxihai
+ * Represents a food type in the system.
+ * 
+ * <p>
+ * This class holds information about a food type, including its ID and name.
+ * </p>
+ * 
+ * <p>
+ * The {@code FoodType} class provides getters and setters for these attributes,
+ * allowing easy access and modification of the data.
+ * </p>
+ * 
+ * Author: Xihai Ren
  */
 public class FoodType {
     private int id;

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * This class contains details about the claim such as the food item ID, 
  * the organization ID that made the claim, and the date and time when the claim was made.
  * 
- * @author renxihai
+ * @author Xihai Ren
  */
 public class Claim {
 

@@ -6,14 +6,47 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing food items in the database.
+ *
+ * <p>
+ * This class provides methods for adding, updating, deleting, and retrieving
+ * food records from the database. It interacts with the database using JDBC.
+ * </p>
+ *
+ * <p>
+ * Example usage:
+ * <pre>
+ *     FoodDao foodDao = new FoodDao();
+ *     Food food = foodDao.getFoodById(1);
+ * </pre>
+ * </p>
+ *
+ * <p>
+ * Note: Ensure that the JDBCClient class is correctly implemented to provide a
+ * valid database connection.
+ * </p>
+ *
+ * @author Alexis Trinh
+ * @author Xihai Ren
+
+ */
 public class FoodDao {
 
     private JDBCClient jdbcClient;
 
+    /**
+     * Constructs a new FoodDao and initializes the JDBCClient.
+     */
     public FoodDao() {
         this.jdbcClient = new JDBCClient(); // Initialize JDBC client
     }
 
+    /**
+     * Adds a new food item to the database.
+     *
+     * @param food the food item to be added
+     */
     public void add(Food food) {
         PreparedStatement preparedStatement;
         try {
@@ -34,6 +67,11 @@ public class FoodDao {
         }
     }
 
+    /**
+     * Updates an existing food item in the database.
+     *
+     * @param food the food item to be updated
+     */
     public void update(Food food) {
         PreparedStatement preparedStatement;
         try {
@@ -55,6 +93,11 @@ public class FoodDao {
         }
     }
 
+    /**
+     * Deletes a food item from the database.
+     *
+     * @param food the food item to be deleted
+     */
     public void delete(Food food) {
         String sql = "DELETE FROM food WHERE fid = ?";
 
@@ -67,6 +110,12 @@ public class FoodDao {
         }
     }
 
+    /**
+     * Retrieves a food item from the database by its ID.
+     *
+     * @param fid the ID of the food item to be retrieved
+     * @return the Food object, or null if not found
+     */
     public Food getFoodById(int fid) {
         Food food = null;
         String sql = "SELECT * FROM food WHERE fid = ?";
@@ -115,6 +164,13 @@ public class FoodDao {
         return food;
     }
 
+    /**
+     * Retrieves all food items from the database, optionally filtered by
+     * expiration date.
+     *
+     * @param search an optional search filter based on expiration date
+     * @return a list of Food objects
+     */
     public List<Food> getAllFoods(String search) {
         List<Food> foodList = new ArrayList<>();
         String sql = "SELECT * FROM food";
@@ -145,6 +201,11 @@ public class FoodDao {
         return foodList;
     }
 
+    /**
+     * Retrieves all food items from the database.
+     *
+     * @return a list of Food objects
+     */
     public List<Food> getAllFoods() {
         List<Food> foodList = new ArrayList<>();
         String sql = "SELECT * FROM food";
@@ -173,6 +234,13 @@ public class FoodDao {
         return foodList;
     }
 
+    /**
+     * Retrieves food items from the database based on donation status.
+     *
+     * @param isDonated true to retrieve donated food, false for non-donated
+     * food
+     * @return a list of Food objects
+     */
     public List<Food> getFoodsByDonatestate(boolean isDonated) {
         String sql = "SELECT * FROM food where is_donate = '0' ";
 
@@ -203,6 +271,15 @@ public class FoodDao {
         return foods;
     }
 
+    /**
+     * Updates the surplus and donation status of a food item in the database.
+     *
+     * @param foodId the ID of the food item to be updated
+     * @param isSurplus the surplus status to set (1 for surplus, 0 for not
+     * surplus)
+     * @param isDonate the donation status to set (1 for donated, 0 for not
+     * donated)
+     */
     public void updateFoodSurplusStatus(int foodId, int isSurplus, int isDonate) {
 
         String sql = "UPDATE food SET is_donate = ?, is_surplus = ? where fid = ?";
@@ -217,14 +294,30 @@ public class FoodDao {
         }
     }
 
+    /**
+     * Retrieves all food items available for donation from the database.
+     *
+     * @return a list of Food objects that are available for donation
+     */
     public List<Food> getAllFoodsForDonation() {
         return this.getFoodsByDonatestate(true);
     }
 
+    /**
+     * Retrieves all food items available for purchase from the database.
+     *
+     * @return a list of Food objects that are available for purchase
+     */
     public List<Food> getAllFoodsForPurchase() {
         return this.getFoodsByDonatestate(false);
     }
 
+    /**
+     * Retrieves food items associated with a user's orders.
+     *
+     * @param userId the ID of the user
+     * @return a list of Food objects that the user has ordered
+     */
     public List<Food> getFoodsFromOrdersByUserId(int userId) {
         List<Food> foodList = new ArrayList<>();
         String sql = "SELECT f.fid, f.fname FROM food f JOIN orders o ON f.fid = o.fid WHERE o.uid = ?";
@@ -245,6 +338,12 @@ public class FoodDao {
         return foodList;
     }
 
+    /**
+     * Retrieves food items associated with an organization's claims.
+     *
+     * @param organizationId the ID of the organization
+     * @return a list of Food objects that the organization has claimed
+     */
     public List<Food> getFoodsFromClaimsByOrganizationId(int organizationId) {
         List<Food> foodList = new ArrayList<>();
         String sql = "SELECT f.fid, f.fname FROM food f JOIN claims c ON f.fid = c.food_id WHERE c.organization_id = ?";
@@ -263,5 +362,25 @@ public class FoodDao {
             e.printStackTrace(); // Log or handle the exception
         }
         return foodList;
+    }
+
+    /**
+     * Retrieves the total number of listed food items by a retailer.
+     *
+     * @param retailerId the ID of the retailer
+     * @return the total number of listed food items
+     */
+    public int getTotalListedItemsByRetailerId(int retailerId) {
+        String sql = "SELECT COUNT(*) FROM food f JOIN store s ON f.store_id = s.store_id WHERE s.uid = ?";
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, retailerId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

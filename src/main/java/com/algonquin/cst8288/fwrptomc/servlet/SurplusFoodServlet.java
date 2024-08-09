@@ -26,6 +26,25 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Servlet that handles surplus food operations, including identifying surplus
+ * food items and notifying subscribers of new surplus listings.
+ *
+ * <p>
+ * This servlet processes HTTP GET and POST requests. It supports listing all
+ * food items, marking food items as surplus, and notifying subscribers if a
+ * food item is identified as surplus.
+ * </p>
+ *
+ * <p>
+ * URL Patterns:
+ * <ul>
+ * <li>/surplus-food</li>
+ * </ul>
+ * </p>
+ *
+ * @author Xihai Ren
+ */
 @WebServlet(name = "SurplusFoodServlet", urlPatterns = {"/surplus-food"})
 public class SurplusFoodServlet extends HttpServlet {
 
@@ -36,6 +55,11 @@ public class SurplusFoodServlet extends HttpServlet {
     private SubscribeService subscribeService;
     private ExecutorService executorService;
 
+    /**
+     * Initializes the servlet and its services.
+     *
+     * @throws ServletException if an error occurs during initialization
+     */
     @Override
     public void init() throws ServletException {
         super.init();
@@ -47,6 +71,9 @@ public class SurplusFoodServlet extends HttpServlet {
 
     }
 
+    /**
+     * Cleans up resources during servlet destruction.
+     */
     @Override
     public void destroy() {
         super.destroy();
@@ -89,6 +116,16 @@ public class SurplusFoodServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Retrieves and displays the list of all food items in JSON format.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private void performShowList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Fetch the list of food items from the service
         List<Food> foodList = foodService.getAllFoods();
@@ -111,6 +148,16 @@ public class SurplusFoodServlet extends HttpServlet {
         response.getWriter().write(jsonFoodList);
     }
 
+    /**
+     * Marks a food item as surplus and optionally sends notifications to
+     * subscribers.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws IOException if an I/O error occurs
+     */
     public void performIdentify(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int foodId = Integer.parseInt(request.getParameter("foodId"));
         String isSurplus = request.getParameter("isSurplus");
@@ -126,7 +173,7 @@ public class SurplusFoodServlet extends HttpServlet {
         foodService.markFoodAsSurplus(foodId, surplus, donate);
         logger.info("Marked food as surplus: foodId={}, surplus={}, donate={}", foodId, surplus, donate);
         if (surplus == 1) {
-            executorService.submit(() -> performNotification(foodId));
+//            executorService.submit(() -> performNotification(foodId));
         }
 
         response.setContentType("application/json");
@@ -141,6 +188,12 @@ public class SurplusFoodServlet extends HttpServlet {
         out.flush();
     }
 
+    /**
+     * Sends notifications to subscribers about a newly identified surplus food
+     * item.
+     *
+     * @param foodId the ID of the food item that was marked as surplus
+     */
     protected void performNotification(int foodId) {
         logger.debug("Performing notification for foodId={}", foodId);
         List<Subscribe> subscribeList = subscribeService.searchSubscribesByAlertType("surplus");
@@ -158,12 +211,32 @@ public class SurplusFoodServlet extends HttpServlet {
 
     }
 
+    /**
+     * Handles the HTTP GET method by calling the processRequest method.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method by calling the processRequest method.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -1,23 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.service;
 
 import com.algonquin.cst8288.fwrptomc.dao.ClaimDao;
 import com.algonquin.cst8288.fwrptomc.model.Claim;
 import java.util.List;
 
+/**
+ * Service class that handles operations related to claims.
+ *
+ * <p>
+ * This service provides methods for adding, updating, deleting, and retrieving
+ * claims. It interacts with the {@link ClaimDao} to perform database
+ * operations.
+ * </p>
+ *
+ * <p>
+ * Example usage:
+ * <pre>
+ *     ClaimService claimService = new ClaimService();
+ *     Claim claim = new Claim();
+ *     claimService.addClaim(claim);
+ * </pre>
+ * </p>
+ *
+ * <p>
+ * Dependencies:
+ * <ul>
+ * <li>{@link ClaimDao}: Data access object for performing operations on the
+ * claim data.</li>
+ * </ul>
+ * </p>
+ *
+ * @author Xihai Ren
+ */
 public class ClaimService {
 
     private ClaimDao claimDao;
 
+    /**
+     * Constructs a new ClaimService and initializes the ClaimDao.
+     */
     public ClaimService() {
         this.claimDao = new ClaimDao();
     }
 
     /**
-     * Add a new claim
+     * Adds a new claim.
      *
      * @param claim the claim to be added
      */
@@ -26,7 +53,7 @@ public class ClaimService {
     }
 
     /**
-     * Update an existing claim
+     * Updates an existing claim.
      *
      * @param claim the claim to be updated
      */
@@ -35,7 +62,7 @@ public class ClaimService {
     }
 
     /**
-     * Delete a claim by its ID
+     * Deletes a claim by its ID.
      *
      * @param claimId the ID of the claim to be deleted
      */
@@ -44,7 +71,7 @@ public class ClaimService {
     }
 
     /**
-     * Retrieve a claim by its ID
+     * Retrieves a claim by its ID.
      *
      * @param claimId the ID of the claim to be retrieved
      * @return the Claim object
@@ -54,7 +81,7 @@ public class ClaimService {
     }
 
     /**
-     * Retrieve all claims
+     * Retrieves all claims.
      *
      * @return a list of Claim objects
      */
@@ -62,6 +89,12 @@ public class ClaimService {
         return claimDao.getAllClaims();
     }
 
+    /**
+     * Retrieves all claims associated with a specific organization ID.
+     *
+     * @param oid the organization ID
+     * @return a list of Claim objects associated with the organization
+     */
     public List<Claim> getClaimsByOrganizationId(int oid) {
         return claimDao.getAllClaimsByOid(oid);
     }

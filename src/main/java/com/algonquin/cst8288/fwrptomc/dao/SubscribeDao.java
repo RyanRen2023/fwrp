@@ -10,10 +10,23 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing subscription data in the
+ * database.
+ *
+ * This class provides methods for adding, updating, deleting, and retrieving
+ * subscription records from the database. It interacts with the database using
+ * JDBC.
+ *
+ * Author: Xihai Ren
+ */
 public class SubscribeDao {
 
     private JDBCClient jdbcClient;
 
+    /**
+     * Constructs a new SubscribeDao and initializes the JDBCClient.
+     */
     public SubscribeDao() {
         this.jdbcClient = new JDBCClient();
     }
@@ -22,9 +35,10 @@ public class SubscribeDao {
      * Add a new subscription to the database
      *
      * @param subscribe the subscription to be added
+     * @return the added Subscribe object with generated ID
      */
     public Subscribe addSubscribe(Subscribe subscribe) {
-        String sql = "INSERT INTO subscribe (uid, fid,create_time,alert_type, email) "
+        String sql = "INSERT INTO subscribe (uid, fid, create_time, alert_type, email) "
                 + "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -39,7 +53,6 @@ public class SubscribeDao {
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int sid = generatedKeys.getInt(1);
-                    // Do something with the generated sid
                     subscribe.setSid(sid); // Assuming Subscribe has a setSid method
                 } else {
                     throw new SQLException("Creating subscription failed, no ID obtained.");
@@ -102,12 +115,12 @@ public class SubscribeDao {
 
             if (rs.next()) {
                 subscribe = new Subscribe();
+                subscribe.setSid(rs.getInt("sid"));
                 subscribe.setUid(rs.getInt("uid"));
                 subscribe.setFid(rs.getInt("fid"));
                 subscribe.setCreateTime(rs.getDate("create_time").toLocalDate());
                 subscribe.setAlertType(rs.getString("alert_type"));
                 subscribe.setEmail(rs.getString("email"));
-                subscribe.setCreateTime(rs.getDate("create_time").toLocalDate());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -125,12 +138,10 @@ public class SubscribeDao {
         String sql = "SELECT * FROM subscribe";
         List<Subscribe> subscribes = new ArrayList<>();
 
-        try (
-                Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 Subscribe subscribe = new Subscribe();
-
                 subscribe.setSid(rs.getInt("sid"));
                 subscribe.setUid(rs.getInt("uid"));
                 subscribe.setFid(rs.getInt("fid"));
@@ -138,7 +149,6 @@ public class SubscribeDao {
                 subscribe.setAlertType(rs.getString("alert_type"));
                 subscribe.setEmail(rs.getString("email"));
                 subscribes.add(subscribe);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,6 +157,12 @@ public class SubscribeDao {
         return subscribes;
     }
 
+    /**
+     * Retrieve subscriptions by alert type
+     *
+     * @param alertType the alert type to filter subscriptions
+     * @return a list of Subscribe objects
+     */
     public List<Subscribe> findByAlertType(String alertType) {
         List<Subscribe> subscribes = new ArrayList<>();
         String sql = "SELECT * FROM subscribe WHERE alert_type LIKE ?";

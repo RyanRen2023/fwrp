@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.dao;
 
-/**
- *
- * @author renxihai
- */
 import com.algonquin.cst8288.fwrptomc.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,10 +9,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing user data in the database.
+ * 
+ * This class provides methods for adding, updating, deleting, and retrieving 
+ * user records from the database. It interacts with the database using JDBC.
+ * 
+ * Author: Xihai Ren
+ */
 public class UserDao {
 
     private JDBCClient jdbcClient;
 
+    /**
+     * Constructs a new UserDao and initializes the JDBCClient.
+     */
     public UserDao() {
         this.jdbcClient = new JDBCClient();
     }
@@ -33,7 +36,8 @@ public class UserDao {
     public void addUser(User user) {
         String sql = "INSERT INTO user (name, email, password, user_type, last_login) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getEmail());
@@ -55,7 +59,8 @@ public class UserDao {
     public void updateUser(User user) {
         String sql = "UPDATE user SET name = ?, email = ?, password = ?, user_type = ?, last_login = ? WHERE uid = ?";
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getEmail());
@@ -78,10 +83,10 @@ public class UserDao {
     public void deleteUser(int uid) {
         String sql = "DELETE FROM user WHERE uid = ?";
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, uid);
-
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,7 +103,8 @@ public class UserDao {
         String sql = "SELECT * FROM user WHERE uid = ?";
         User user = null;
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, uid);
             ResultSet rs = pstmt.executeQuery();
@@ -128,7 +134,9 @@ public class UserDao {
         String sql = "SELECT * FROM user";
         List<User> users = new ArrayList<>();
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql); 
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 User user = new User();
@@ -138,7 +146,6 @@ public class UserDao {
                 user.setPassword(rs.getString("password"));
                 user.setUserType(rs.getString("user_type"));
                 user.setLastLogin(rs.getObject("last_login", LocalDateTime.class));
-
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -158,7 +165,8 @@ public class UserDao {
         String sql = "SELECT * FROM user WHERE email = ?";
         User user = null;
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();

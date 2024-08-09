@@ -97,6 +97,9 @@ The database architecture includes tables for storing information about food ite
 
 ### Entity Relationship Diagram – Physical Data Model
 
+![ER Database Diagram](docs/diagrams/ER/ER.png)
+
+
 
 ## 9. Security Architecture
 ### Enforcing Password Policies
