@@ -126,7 +126,7 @@ public class SurplusFoodServlet extends HttpServlet {
         foodService.markFoodAsSurplus(foodId, surplus, donate);
         logger.info("Marked food as surplus: foodId={}, surplus={}, donate={}", foodId, surplus, donate);
         if (surplus == 1) {
-            executorService.submit(() -> performNotification(foodId));
+//            executorService.submit(() -> performNotification(foodId));
         }
 
         response.setContentType("application/json");
