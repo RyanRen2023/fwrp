@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.servlet;
 
 import java.io.IOException;
@@ -12,35 +8,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author renxihai
+ * Servlet for handling dashboard requests. This servlet processes both GET and POST requests to display the dashboard page.
+ * 
+ * <p>
+ * The servlet forwards requests to the dashboard JSP page for rendering.
+ * </p>
+ * 
+ * <p>
+ * URL Patterns:
+ * <ul>
+ * <li>/dashboard</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Xihai Ren
  */
 @WebServlet(name = "DashboardServlet", urlPatterns = {"/dashboard"})
 public class DashboardServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
+     * Processes requests for both HTTP GET and POST methods.
+     * 
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet returns to the client
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         request.getRequestDispatcher("/jsp/dashboard.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
+     * Handles the HTTP GET method.
+     * 
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet returns to the client
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,12 +54,12 @@ public class DashboardServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
+     * Handles the HTTP POST method.
+     * 
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet returns to the client
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -64,12 +69,11 @@ public class DashboardServlet extends HttpServlet {
 
     /**
      * Returns a short description of the servlet.
-     *
+     * 
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "DashboardServlet handles requests to display the consumer dashboard.";
+    }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.servlet;
 
 import com.algonquin.cst8288.fwrptomc.model.User;
@@ -23,17 +19,40 @@ import com.google.gson.JsonSyntaxException;
 import java.io.PrintWriter;
 
 /**
+ * Servlet that handles user sign-up requests.
  *
- * @author renxihai
+ * <p>
+ * This servlet processes both GET and POST requests to register a new user. It
+ * validates the user input, checks for existing email addresses, and creates a
+ * new user account if the input is valid.
+ * </p>
+ *
+ * <p>
+ * URL Patterns:
+ * <ul>
+ * <li>/sign-up</li>
+ * </ul>
+ * </p>
+ *
+ * @author Xihai Ren
  */
 @WebServlet(name = "SignUpServlet", urlPatterns = {"/sign-up"})
 public class SignUpServlet extends HttpServlet {
 
     private UserService userService = new UserServiceImpl();
 
+    /**
+     * Handles the HTTP POST method to process user sign-up requests.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
 
         JsonObject jsonObject = requestJsonObj(request);
 
@@ -50,16 +69,13 @@ public class SignUpServlet extends HttpServlet {
         if (!errors.isEmpty()) {
             responseJson.addProperty("status", "failure");
             responseJson.addProperty("message", errors.toString());
-            
-
         } else {
             User userNew = new User(username, email, password, userType);
             userService.createUser(userNew);
             responseJson.addProperty("status", "success");
             responseJson.addProperty("message", "Registration successful!");
-
         }
-        
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
@@ -67,8 +83,16 @@ public class SignUpServlet extends HttpServlet {
         out.flush();
     }
 
+    /**
+     * Parses a JSON object from the request body.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @return a JsonObject containing the parsed JSON data
+     * @throws IOException if an I/O error occurs while reading the request body
+     * @throws JsonSyntaxException if the JSON data is not well-formed
+     */
     private JsonObject requestJsonObj(HttpServletRequest request) throws IOException, JsonSyntaxException {
-        // Read JSON data from request
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = request.getReader();
         String line;
@@ -76,31 +100,48 @@ public class SignUpServlet extends HttpServlet {
             sb.append(line);
         }
         String jsonData = sb.toString();
-        // Parse JSON data
-        JsonObject jsonObject = JsonParser.parseString(jsonData).getAsJsonObject();
-        return jsonObject;
+        return JsonParser.parseString(jsonData).getAsJsonObject();
     }
 
+    /**
+     * Validates the sign-up request, checking for missing fields, email
+     * duplication, and password confirmation mismatch.
+     *
+     * @param email the email address provided by the user
+     * @param password the password provided by the user
+     * @param username the username provided by the user
+     * @param confirmPassword the confirmation password provided by the user
+     * @return a Map containing error messages if validation fails, or an empty
+     * Map if validation passes
+     */
     private Map<String, String> validateRequest(String email, String password, String username, String confirmPassword) {
 
-        Map<String, String> errors = new HashMap();
+        Map<String, String> errors = new HashMap<>();
 
-        if (email.isBlank()
-                || password.isBlank() || username.isBlank() || confirmPassword.isBlank()) {
-            errors.put("isBlank", "email or username or password or confirmPassword should not be null!");
+        if (email.isBlank() || password.isBlank() || username.isBlank() || confirmPassword.isBlank()) {
+            errors.put("isBlank", "Email, username, password, or confirm password should not be null!");
         }
         User user = userService.getUserByEmail(email);
-        if (user
-                != null) {
-            errors.put("email", "email has been used! ");
+        if (user != null) {
+            errors.put("email", "Email has been used! ");
         }
         if (!password.equals(confirmPassword)) {
-            errors.put("password", "password and confirm password are not nuch! ");
-
+            errors.put("password", "Password and confirm password do not match!");
         }
         return errors;
     }
 
+    /**
+     * Handles the HTTP GET method by forwarding the request to the doPost
+     * method.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

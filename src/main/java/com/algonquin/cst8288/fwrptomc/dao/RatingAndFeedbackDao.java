@@ -9,16 +9,32 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing rating and feedback in the
+ * database.
+ *
+ * This class provides methods for adding, updating, deleting, and retrieving
+ * rating and feedback records from the database. It interacts with the database
+ * using JDBC.
+ *
+ * Note: Ensure that the JDBCClient class is correctly implemented to provide a
+ * valid database connection.
+ *
+ * Author: Xihai Ren
+ */
 public class RatingAndFeedbackDao {
 
     private JDBCClient jdbcClient;
 
+    /**
+     * Constructs a new RatingAndFeedbackDao and initializes the JDBCClient.
+     */
     public RatingAndFeedbackDao() {
         this.jdbcClient = new JDBCClient();
     }
 
     /**
-     * Add a new rating and feedback to the database
+     * Adds a new rating and feedback to the database.
      *
      * @param ratingAndFeedback the rating and feedback to be added
      */
@@ -38,7 +54,7 @@ public class RatingAndFeedbackDao {
     }
 
     /**
-     * Update an existing rating and feedback in the database
+     * Updates an existing rating and feedback in the database.
      *
      * @param ratingAndFeedback the rating and feedback to be updated
      */
@@ -59,7 +75,7 @@ public class RatingAndFeedbackDao {
     }
 
     /**
-     * Delete a rating and feedback from the database by its ID
+     * Deletes a rating and feedback from the database by its ID.
      *
      * @param ratingID the rating ID of the rating and feedback to be deleted
      */
@@ -75,7 +91,7 @@ public class RatingAndFeedbackDao {
     }
 
     /**
-     * Retrieve a rating and feedback from the database by its ID
+     * Retrieves a rating and feedback from the database by its ID.
      *
      * @param ratingID the rating ID of the rating and feedback to be retrieved
      * @return the RatingAndFeedback object
@@ -105,7 +121,7 @@ public class RatingAndFeedbackDao {
     }
 
     /**
-     * Retrieve all ratings and feedback from the database
+     * Retrieves all ratings and feedback from the database.
      *
      * @return a list of RatingAndFeedback objects
      */
@@ -131,6 +147,12 @@ public class RatingAndFeedbackDao {
         return ratingsAndFeedback;
     }
 
+    /**
+     * Retrieves all ratings and feedback by a specific user ID.
+     *
+     * @param userId the user ID to filter ratings and feedback
+     * @return a list of RatingAndFeedback objects
+     */
     public List<RatingAndFeedback> getAllRatingsAndFeedbackByUserId(int userId) {
         String sql = "SELECT * FROM RatingAndFeedback where userId = " + userId;
         List<RatingAndFeedback> ratingsAndFeedback = new ArrayList<>();
@@ -153,6 +175,12 @@ public class RatingAndFeedbackDao {
         return ratingsAndFeedback;
     }
 
+    /**
+     * Retrieves the total number of feedback given by a specific user ID.
+     *
+     * @param userId the user ID to filter ratings and feedback
+     * @return the total number of feedback by the user
+     */
     public int getTotalFeedbackByUserId(int userId) {
         String sql = "SELECT COUNT(*) AS total_feedback FROM RatingAndFeedback WHERE UserID = ?";
         int totalFeedback = 0;

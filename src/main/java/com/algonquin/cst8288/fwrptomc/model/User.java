@@ -1,13 +1,20 @@
-
 package com.algonquin.cst8288.fwrptomc.model;
 
 import java.time.LocalDateTime;
 
 /**
+ * Represents a user in the Food Waste Reduction Platform.
  *
- * @author renxihai
+ * <p>
+ * This class captures the essential details of a user, including their unique
+ * ID, name, email, password, user type (such as retailer or consumer), and the
+ * timestamp of their last login.
+ * </p>
+ *
+ * Author: Xihai Ren
  */
 public class User {
+
     private int uid;
     private String name;
     private String email;
@@ -17,8 +24,6 @@ public class User {
 
     public User() {
     }
-    
-    
 
     public User(String name, String email, String password, String userType) {
         this.name = name;
@@ -26,8 +31,6 @@ public class User {
         this.password = password;
         this.userType = userType;
     }
-    
-    
 
     // Getters and Setters
     public int getUid() {

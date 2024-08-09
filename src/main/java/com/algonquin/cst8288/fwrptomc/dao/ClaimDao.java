@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.dao;
 
 import com.algonquin.cst8288.fwrptomc.model.Claim;
@@ -12,23 +8,50 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing claims in the database.
+ * 
+ * <p>
+ * This class provides methods for adding, updating, deleting, and retrieving 
+ * claim records from the database. It interacts with the database using JDBC.
+ * </p>
+ * 
+ * <p>
+ * Example usage:
+ * <pre>
+ *     ClaimDao claimDao = new ClaimDao();
+ *     Claim claim = claimDao.getClaimById(1);
+ * </pre>
+ * </p>
+ * 
+ * <p>
+ * Note: Ensure that the JDBCClient class is correctly implemented to provide
+ * a valid database connection.
+ * </p>
+ * 
+ * @author Xihai Ren
+ */
 public class ClaimDao {
 
     private JDBCClient jdbcClient;
 
+    /**
+     * Constructs a new ClaimDao and initializes the JDBCClient.
+     */
     public ClaimDao() {
         this.jdbcClient = new JDBCClient();
     }
 
     /**
-     * Add a new claim to the database
+     * Adds a new claim to the database.
      *
      * @param claim the claim to be added
      */
     public void addClaim(Claim claim) {
-        String sql = "INSERT INTO claims (food_id, organization_id, claim_date, quantity) VALUES (?, ?, ?,?)";
+        String sql = "INSERT INTO claims (food_id, organization_id, claim_date, quantity) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, claim.getFoodId());
             pstmt.setInt(2, claim.getOrganizationId());
             pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(claim.getClaimDate()));
@@ -40,14 +63,15 @@ public class ClaimDao {
     }
 
     /**
-     * Update an existing claim in the database
+     * Updates an existing claim in the database.
      *
      * @param claim the claim to be updated
      */
     public void updateClaim(Claim claim) {
         String sql = "UPDATE claims SET food_id = ?, organization_id = ?, claim_date = ?, quantity = ? WHERE claim_id = ?";
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, claim.getFoodId());
             pstmt.setInt(2, claim.getOrganizationId());
             pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(claim.getClaimDate()));
@@ -60,14 +84,15 @@ public class ClaimDao {
     }
 
     /**
-     * Delete a claim from the database by its ID
+     * Deletes a claim from the database by its ID.
      *
-     * @param claimId the claim ID of the claim to be deleted
+     * @param claimId the ID of the claim to be deleted
      */
     public void deleteClaim(int claimId) {
         String sql = "DELETE FROM claims WHERE claim_id = ?";
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, claimId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -76,16 +101,17 @@ public class ClaimDao {
     }
 
     /**
-     * Retrieve a claim from the database by its ID
+     * Retrieves a claim from the database by its ID.
      *
-     * @param claimId the claim ID of the claim to be retrieved
-     * @return the Claim object
+     * @param claimId the ID of the claim to be retrieved
+     * @return the Claim object, or null if not found
      */
     public Claim getClaimById(int claimId) {
         String sql = "SELECT * FROM claims WHERE claim_id = ?";
         Claim claim = null;
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, claimId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -95,6 +121,7 @@ public class ClaimDao {
                 claim.setFoodId(rs.getInt("food_id"));
                 claim.setOrganizationId(rs.getInt("organization_id"));
                 claim.setClaimDate(rs.getTimestamp("claim_date").toLocalDateTime());
+                claim.setQuantity(rs.getInt("quantity"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,7 +131,7 @@ public class ClaimDao {
     }
 
     /**
-     * Retrieve all claims from the database
+     * Retrieves all claims from the database.
      *
      * @return a list of Claim objects
      */
@@ -112,35 +139,16 @@ public class ClaimDao {
         String sql = "SELECT * FROM claims";
         List<Claim> claims = new ArrayList<>();
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql); 
+             ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 Claim claim = new Claim();
                 claim.setClaimId(rs.getInt("claim_id"));
                 claim.setFoodId(rs.getInt("food_id"));
-                claim.setQuantity(rs.getInt("quantity"));
                 claim.setOrganizationId(rs.getInt("organization_id"));
                 claim.setClaimDate(rs.getTimestamp("claim_date").toLocalDateTime());
-                claims.add(claim);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return claims;
-    }
-
-    public List<Claim> getAllClaimsByOid(int oid) {
-        String sql = "SELECT * FROM claims where organization_id = " + oid;
-        List<Claim> claims = new ArrayList<>();
-
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                Claim claim = new Claim();
-                claim.setClaimId(rs.getInt("claim_id"));
-                claim.setFoodId(rs.getInt("food_id"));
                 claim.setQuantity(rs.getInt("quantity"));
-                claim.setOrganizationId(rs.getInt("organization_id"));
-                claim.setClaimDate(rs.getTimestamp("claim_date").toLocalDateTime());
                 claims.add(claim);
             }
         } catch (SQLException e) {
@@ -151,7 +159,36 @@ public class ClaimDao {
     }
 
     /**
-     * Retrieve the total number of claims by organization ID
+     * Retrieves all claims by organization ID.
+     *
+     * @param oid the organization ID
+     * @return a list of Claim objects for the specified organization
+     */
+    public List<Claim> getAllClaimsByOid(int oid) {
+        String sql = "SELECT * FROM claims WHERE organization_id = " + oid;
+        List<Claim> claims = new ArrayList<>();
+
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql); 
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Claim claim = new Claim();
+                claim.setClaimId(rs.getInt("claim_id"));
+                claim.setFoodId(rs.getInt("food_id"));
+                claim.setOrganizationId(rs.getInt("organization_id"));
+                claim.setClaimDate(rs.getTimestamp("claim_date").toLocalDateTime());
+                claim.setQuantity(rs.getInt("quantity"));
+                claims.add(claim);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return claims;
+    }
+
+    /**
+     * Retrieves the total number of claims by organization ID.
      *
      * @param organizationId the organization ID
      * @return the total number of claims
@@ -160,7 +197,8 @@ public class ClaimDao {
         String sql = "SELECT COUNT(*) FROM claims WHERE organization_id = ?";
         int totalClaims = 0;
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, organizationId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -175,10 +213,10 @@ public class ClaimDao {
     }
 
     /**
-     * Retrieve the most claimed food item by organization ID
+     * Retrieves the most claimed food item by organization ID.
      *
      * @param organizationId the organization ID
-     * @return the most claimed food item name
+     * @return the name of the most claimed food item
      */
     public String getMostClaimedFoodItemByOrganizationId(int organizationId) {
         String sql = "SELECT f.fname, SUM(c.quantity) AS total_quantity "
@@ -190,7 +228,8 @@ public class ClaimDao {
                 + "LIMIT 1";
         String mostClaimedFoodItem = null;
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, organizationId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -203,10 +242,18 @@ public class ClaimDao {
 
         return mostClaimedFoodItem;
     }
-    
+
+    /**
+     * Retrieves the total number of donated items by retailer ID.
+     *
+     * @param retailerId the retailer ID
+     * @return the total number of donated items
+     */
     public int getTotalDonatedItemsByRetailerId(int retailerId) {
-        String sql = "SELECT COUNT(*) FROM claims WHERE organization_id IN (SELECT uid FROM user WHERE user_type = 'retailer' AND uid = ?)";
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        String sql = "SELECT COUNT(*) FROM claims WHERE organization_id IN "
+                   + "(SELECT uid FROM user WHERE user_type = 'retailer' AND uid = ?)";
+        try (Connection conn = jdbcClient.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, retailerId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -217,5 +264,4 @@ public class ClaimDao {
         }
         return 0;
     }
-
 }

@@ -28,7 +28,7 @@ public class FoodTest {
         assertEquals(0, food.getFtid());
         assertEquals(0, food.getIsDonate());
         assertEquals(0, food.getStoreId());
-        assertEquals(0, food.isIsSurplus());
+        assertEquals(0, food.getIsSurplus());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class FoodTest {
         assertEquals(ftid, food.getFtid());
         assertEquals(isDonate, food.getIsDonate());
         assertEquals(storeId, food.getStoreId());
-        assertEquals(isSurplus, food.isIsSurplus());
+        assertEquals(isSurplus, food.getIsSurplus());
     }
 
     @Test

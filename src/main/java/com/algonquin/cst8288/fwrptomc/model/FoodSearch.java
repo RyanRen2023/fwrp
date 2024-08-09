@@ -1,15 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- *
- * @author renxihai
+ * Represents a food item in the search results.
+ * 
+ * <p>
+ * This class holds information about a food item, such as its ID, name, expiration date,
+ * price, inventory, discount, donation status, food type, store name, and city.
+ * </p>
+ * 
+ * <p>
+ * The {@code FoodSearch} class provides getters and setters for these attributes,
+ * allowing easy access and modification of the data.
+ * </p>
+ * 
+ * Author: Xihai Ren
  */
 public class FoodSearch {
     private int fid;

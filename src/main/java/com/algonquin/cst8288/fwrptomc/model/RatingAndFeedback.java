@@ -1,14 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.model;
 
 import java.time.LocalDateTime;
 
 /**
- *
- * @author renxihai
+ * Represents the Rating and Feedback model.
+ * 
+ * <p>
+ * This class holds information about user ratings and feedback on food items.
+ * It includes details such as the rating ID, user ID, food ID, rating value, review text, 
+ * and the timestamp when the feedback was created.
+ * </p>
+ * 
+ * <p>
+ * The {@code RatingAndFeedback} class provides getters and setters for accessing and modifying these fields.
+ * </p>
+ * 
+ * Author: Xihai Ren
  */
 public class RatingAndFeedback {
     private int ratingID;

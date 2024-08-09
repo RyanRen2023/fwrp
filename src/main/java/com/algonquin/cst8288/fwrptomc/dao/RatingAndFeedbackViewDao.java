@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.dao;
 
 import com.algonquin.cst8288.fwrptomc.model.RatingAndFeedbackView;
@@ -12,14 +8,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing rating and feedback view in the database.
+ * 
+ * This class provides methods for retrieving rating and feedback data related to a specific retailer from the database.
+ * It interacts with the database using JDBC.
+ * 
+ * Note: Ensure that the JDBCClient class is correctly implemented to provide
+ * a valid database connection.
+ * 
+ * Author: Xihai Ren
+ */
 public class RatingAndFeedbackViewDao {
 
     private JDBCClient jdbcClient;
 
+    /**
+     * Constructs a new RatingAndFeedbackViewDao and initializes the JDBCClient.
+     */
     public RatingAndFeedbackViewDao() {
         this.jdbcClient = new JDBCClient();
     }
 
+    /**
+     * Retrieves rating and feedback data by retailer ID from the database.
+     *
+     * @param retailerId the retailer ID to filter rating and feedback
+     * @return a list of RatingAndFeedbackView objects
+     */
     public List<RatingAndFeedbackView> getRatingAndFeedbackByRetailerId(int retailerId) {
         String sql = "SELECT food.fid, food.fname, rf.Rating, rf.Review, rf.CreatedAt, u2.user_type " +
                      "FROM food " +

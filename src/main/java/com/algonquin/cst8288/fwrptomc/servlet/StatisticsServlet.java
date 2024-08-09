@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.algonquin.cst8288.fwrptomc.servlet;
 
 import com.algonquin.cst8288.fwrptomc.service.StatisticsService;
@@ -15,11 +11,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet that handles requests for retrieving statistical data.
+ * 
+ * <p>
+ * This servlet processes HTTP GET requests to provide JSON-formatted statistical
+ * data via an API endpoint.
+ * </p>
+ * 
+ * <p>
+ * URL Patterns:
+ * <ul>
+ * <li>/api/statistics</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Xihai Ren
+ */
 @WebServlet(name = "StatisticsServlet", urlPatterns = {"/api/statistics"})
 public class StatisticsServlet extends HttpServlet {
 
     private StatisticsService statisticsService = new StatisticsService();
 
+    /**
+     * Handles the HTTP GET method to retrieve statistical data.
+     * 
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JsonObject statistics = statisticsService.getStatistics();

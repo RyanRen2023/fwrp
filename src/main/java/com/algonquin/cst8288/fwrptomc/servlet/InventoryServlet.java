@@ -15,17 +15,47 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Servlet for handling inventory management. This servlet processes both GET
+ * and POST requests to manage food inventory, including adding, updating, and
+ * deleting food items.
+ *
+ * <p>
+ * URL Patterns:
+ * <ul>
+ * <li>/inventory</li>
+ * </ul>
+ * </p>
+ *
+ * @author Alexis Trinh
+ */
 @WebServlet(name = "InventoryServlet", urlPatterns = {"/inventory"})
 public class InventoryServlet extends HttpServlet {
 
     private FoodService foodService;
 
+    /**
+     * Initializes the servlet and sets up the FoodService.
+     *
+     * @throws ServletException if an error occurs during initialization
+     */
     @Override
     public void init() throws ServletException {
         super.init();
         foodService = new FoodService(); // Initialize the service
     }
 
+    /**
+     * Processes HTTP POST requests. Depending on the "actionUser" parameter, it
+     * can add, update, or delete food items.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String actionUser = request.getParameter("actionUser");
         if (actionUser == null) {
@@ -47,6 +77,18 @@ public class InventoryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Processes HTTP GET requests. Depending on the "actionUser" parameter, it
+     * can show forms for adding or updating food items, or list food items
+     * based on expiration date.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String actionUser = request.getParameter("actionUser");
         if (actionUser == null) {
@@ -71,6 +113,14 @@ public class InventoryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Displays the form for adding a new food item.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     */
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.getRequestDispatcher("/jsp/add.jsp").forward(request, response);
@@ -79,6 +129,14 @@ public class InventoryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Deletes a food item from the inventory based on the food ID.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     */
     private void performDelete(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("fid"));
         Food food = foodService.getFoodById(id);
@@ -90,6 +148,14 @@ public class InventoryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Adds a new food item to the inventory.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     */
     private void performAdd(HttpServletRequest request, HttpServletResponse response) {
         String fname = request.getParameter("fname");
         String expirationStr = request.getParameter("expiration");
@@ -115,6 +181,20 @@ public class InventoryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Lists all food items in the inventory, optionally filtered by expiration
+     * date.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @param search the search criteria for filtering food items by expiration
+     * date
+     * @throws SQLException if a database access error occurs
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private void listFood(HttpServletRequest request, HttpServletResponse response, String search)
             throws SQLException, ServletException, IOException {
         List<Food> foodList = foodService.getAllFoods(search);
@@ -123,6 +203,16 @@ public class InventoryServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Displays the form for updating an existing food item.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private void showUpdateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Food food = foodService.getFoodById(id);
@@ -134,6 +224,15 @@ public class InventoryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Updates an existing food item in the inventory.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws IOException if an I/O error occurs
+     */
     private void performUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int fid = Integer.parseInt(request.getParameter("fid"));
         String fname = request.getParameter("fname");

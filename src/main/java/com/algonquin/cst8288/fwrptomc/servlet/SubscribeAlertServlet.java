@@ -3,7 +3,6 @@ package com.algonquin.cst8288.fwrptomc.servlet;
 import com.algonquin.cst8288.fwrptomc.model.Subscribe;
 import com.algonquin.cst8288.fwrptomc.service.SubscribeService;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
@@ -17,6 +16,23 @@ import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Servlet that handles subscription alerts.
+ * 
+ * <p>
+ * This servlet processes HTTP GET, POST, PUT, and DELETE requests to manage subscriptions
+ * for alerts related to food items. It allows users to subscribe, update, and delete subscriptions.
+ * </p>
+ * 
+ * <p>
+ * URL Patterns:
+ * <ul>
+ * <li>/subscribe-alerts</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Xihai Ren
+ */
 @WebServlet(name = "SubscribeAlertServlet", urlPatterns = {"/subscribe-alerts"})
 public class SubscribeAlertServlet extends HttpServlet {
 
@@ -26,6 +42,14 @@ public class SubscribeAlertServlet extends HttpServlet {
         this.subscribeService = new SubscribeService();
     }
 
+    /**
+     * Handles the HTTP GET method to retrieve all subscriptions.
+     * 
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,6 +58,14 @@ public class SubscribeAlertServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/subscribe-alerts.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method to create a new subscription.
+     * 
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -64,6 +96,14 @@ public class SubscribeAlertServlet extends HttpServlet {
 
     }
 
+    /**
+     * Handles the HTTP PUT method to update an existing subscription.
+     * 
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -89,7 +129,6 @@ public class SubscribeAlertServlet extends HttpServlet {
                     alertType = keyValue[1];
                     break;
                 case "email":
-
                     email = keyValue[1];
                     email = URLDecoder.decode(email, "UTF-8");
                     break;
@@ -126,6 +165,14 @@ public class SubscribeAlertServlet extends HttpServlet {
         response.getWriter().write(responseJson.toString());
     }
 
+    /**
+     * Handles the HTTP DELETE method to delete an existing subscription.
+     * 
+     * @param request  the HttpServletRequest object that contains the request the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -146,8 +193,13 @@ public class SubscribeAlertServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Returns a short description of the servlet.
+     * 
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
-        return "SubscribeAlertServlet handles subscription requests";
+        return "SubscribeAlertServlet handles subscription requests for alert notifications.";
     }
 }

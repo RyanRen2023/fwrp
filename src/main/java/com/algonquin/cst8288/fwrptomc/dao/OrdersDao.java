@@ -8,9 +8,36 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing orders in the database.
+ * 
+ * <p>
+ * This class provides methods for adding, updating, deleting, and retrieving
+ * order records from the database. It interacts with the database using JDBC.
+ * </p>
+ * 
+ * <p>
+ * Example usage:
+ * <pre>
+ *     OrdersDao ordersDao = new OrdersDao();
+ *     List<Orders> ordersList = ordersDao.getAllOrders();
+ * </pre>
+ * </p>
+ * 
+ * <p>
+ * Note: Ensure that the JDBCClient class is correctly implemented to provide
+ * a valid database connection.
+ * </p>
+ * 
+ * @author Xihai Ren
+ */
 public class OrdersDao {
 
     private JDBCClient jdbcClient;
+    
+    /**
+     * Constructs a new OrdersDao and initializes the JDBCClient.
+     */
 
     public OrdersDao() {
         this.jdbcClient = new JDBCClient();
@@ -128,7 +155,12 @@ public class OrdersDao {
 
         return ordersList;
     }
-
+/**
+     * Retrieves all orders by a specific user ID.
+     *
+     * @param userId the user ID to filter orders
+     * @return a list of Orders objects
+     */
     public List<Orders> getAllOrdersUserId(int userId) {
         String sql = "SELECT * FROM orders where uid = " + userId;
         List<Orders> ordersList = new ArrayList<>();
@@ -164,7 +196,12 @@ public class OrdersDao {
         }
         return 0;
     }
-
+/**
+     * Retrieves the total number of orders by a specific user ID.
+     *
+     * @param userId the user ID to filter orders
+     * @return the total number of orders by the user
+     */
     public double getTotalExpenditureByUserId(int userId) {
         String sql = "SELECT SUM(money) FROM orders WHERE uid = ?";
         try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {

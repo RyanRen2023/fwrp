@@ -8,8 +8,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- *
- * @author renxihai
+ * Represents an order in the system.
+ * 
+ * <p>
+ * This class holds information about an order, including the order ID, user ID, 
+ * food ID, amount of money, quantity, and the purchase date.
+ * </p>
+ * 
+ * <p>
+ * The {@code Orders} class provides getters and setters for these attributes,
+ * allowing easy access and modification of the data.
+ * </p>
+ * 
+ * Author: Xihai Ren
  */
 public class Orders {
     private int oid;

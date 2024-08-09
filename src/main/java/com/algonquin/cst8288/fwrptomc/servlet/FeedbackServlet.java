@@ -7,7 +7,6 @@ import com.algonquin.cst8288.fwrptomc.model.User;
 import com.algonquin.cst8288.fwrptomc.service.FoodService;
 import com.algonquin.cst8288.fwrptomc.service.RatingAndFeedbackService;
 import com.algonquin.cst8288.fwrptomc.service.RatingAndFeedbackViewService;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
@@ -21,6 +20,25 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Servlet for handling feedback requests. This servlet processes both GET and
+ * POST requests for submitting and viewing feedback.
+ *
+ * <p>
+ * Depending on the user type (consumer, organization, or retailer), the servlet
+ * forwards requests to the appropriate JSP page for rendering or handles
+ * feedback submission.
+ * </p>
+ *
+ * <p>
+ * URL Patterns:
+ * <ul>
+ * <li>/feedback</li>
+ * </ul>
+ * </p>
+ *
+ * @author Sam
+ */
 @WebServlet(name = "FeedbackServlet", urlPatterns = {"/feedback"})
 public class FeedbackServlet extends HttpServlet {
 
@@ -28,6 +46,11 @@ public class FeedbackServlet extends HttpServlet {
     private FoodService foodService;
     private RatingAndFeedbackViewService viewService;
 
+    /**
+     * Initializes the servlet and sets up the services.
+     *
+     * @throws ServletException if an error occurs during initialization
+     */
     @Override
     public void init() throws ServletException {
         super.init();
@@ -36,6 +59,16 @@ public class FeedbackServlet extends HttpServlet {
         viewService = new RatingAndFeedbackViewService();
     }
 
+    /**
+     * Processes requests for both HTTP GET and POST methods.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -50,6 +83,17 @@ public class FeedbackServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Handles feedback submission for consumers and organizations.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @param user the User object representing the logged-in user
+     * @throws IOException if an I/O error occurs
+     * @throws ServletException if a servlet-specific error occurs
+     */
     private void handleFeedbackSubmission(HttpServletRequest request, HttpServletResponse response, User user)
             throws IOException, ServletException {
         if ("POST".equalsIgnoreCase(request.getMethod())) {
@@ -66,7 +110,6 @@ public class FeedbackServlet extends HttpServlet {
             feedbackService.addRatingAndFeedback(feedback);
 
             // Fetch the food item's name
-            FoodService foodService = new FoodService();
             Food food = foodService.getFoodById(foodId);
 
             response.setContentType("application/json");
@@ -90,6 +133,17 @@ public class FeedbackServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Handles feedback viewing for retailers.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @param user the User object representing the logged-in user
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     private void handleFeedbackViewing(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
         List<RatingAndFeedbackView> feedbackList = viewService.getRatingAndFeedbackByRetailerId(user.getUid());
@@ -97,20 +151,45 @@ public class FeedbackServlet extends HttpServlet {
         request.getRequestDispatcher("/jsp/feedbackList.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP GET method by calling processRequest method.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method by calling processRequest method.
+     *
+     * @param request the HttpServletRequest object that contains the request
+     * the client made to the servlet
+     * @param response the HttpServletResponse object that contains the response
+     * the servlet returns to the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
-        return "FeedbackServlet";
+        return "FeedbackServlet handles requests for submitting and viewing feedback.";
     }
 }

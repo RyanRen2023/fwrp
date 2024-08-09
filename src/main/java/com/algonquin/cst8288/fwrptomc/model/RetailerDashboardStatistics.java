@@ -1,11 +1,22 @@
 package com.algonquin.cst8288.fwrptomc.model;
 
+/**
+ * Represents statistics for a retailer's dashboard.
+ * 
+ * <p>
+ * This class encapsulates various metrics related to a retailer's performance, 
+ * such as the total listed items, total sold items, total revenue, the most popular item, 
+ * and the total number of donated items.
+ * </p>
+ * 
+ * Author: Xihai Ren
+ */
 public class RetailerDashboardStatistics {
     private int totalListedItems;
     private int totalSoldItems;
     private double totalRevenue;
     private String mostPopularItem;
-    private int totalDonatedItems; // 新添加的字段
+    private int totalDonatedItems;
 
     // Getters and Setters
 
