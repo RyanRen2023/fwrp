@@ -97,38 +97,38 @@ public class FeedbackServlet extends HttpServlet {
     private void handleFeedbackSubmission(HttpServletRequest request, HttpServletResponse response, User user)
             throws IOException, ServletException {
         if ("POST".equalsIgnoreCase(request.getMethod())) {
-            int foodId = Integer.parseInt(request.getParameter("foodItem"));
+            int idForFood = Integer.parseInt(request.getParameter("foodItem"));
             int rating = Integer.parseInt(request.getParameter("rating"));
             String comments = request.getParameter("comments");
 
-            RatingAndFeedback feedback = new RatingAndFeedback();
-            feedback.setFoodID(foodId);
-            feedback.setRating(rating);
-            feedback.setReview(comments);
-            feedback.setUserID(user.getUid());
-            feedback.setCreatedAt(LocalDateTime.now());
-            feedbackService.addRatingAndFeedback(feedback);
+            RatingAndFeedback ratingsAndFeedback = new RatingAndFeedback();
+            ratingsAndFeedback.setFoodID(idForFood);
+            ratingsAndFeedback.setRating(rating);
+            ratingsAndFeedback.setReview(comments);
+            ratingsAndFeedback.setUserID(user.getUid());
+            ratingsAndFeedback.setCreatedAt(LocalDateTime.now());
+            feedbackService.addRatingAndFeedback(ratingsAndFeedback);
 
             // Fetch the food item's name
-            Food food = foodService.getFoodById(foodId);
+            Food foodItem = foodService.getFoodById(idForFood);
 
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             PrintWriter out = response.getWriter();
             JsonObject jsonResponse = new JsonObject();
             jsonResponse.addProperty("status", "success");
-            jsonResponse.addProperty("foodName", food.getFname()); // Include food name in the response
+            jsonResponse.addProperty("foodName", foodItem.getFname()); // Include food name in the response
             out.print(jsonResponse);
             out.flush();
 
         } else {
-            List<Food> items = null;
+            List<Food> FoodItems = null;
             if ("consumer".equals(user.getUserType())) {
-                items = foodService.getFoodsFromOrdersByUserId(user.getUid());
+                FoodItems = foodService.getFoodsFromOrdersByUserId(user.getUid());
             } else if ("organization".equals(user.getUserType())) {
-                items = foodService.getFoodsFromClaimsByOrganizationId(user.getUid());
+                FoodItems = foodService.getFoodsFromClaimsByOrganizationId(user.getUid());
             }
-            request.setAttribute("items", items);
+            request.setAttribute("items", FoodItems);
             request.getRequestDispatcher("/jsp/feedback.jsp").forward(request, response);
         }
     }
