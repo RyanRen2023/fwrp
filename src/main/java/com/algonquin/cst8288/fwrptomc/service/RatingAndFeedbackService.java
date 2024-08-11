@@ -38,14 +38,14 @@ import java.util.List;
  */
 public class RatingAndFeedbackService {
 
-    private RatingAndFeedbackDao ratingAndFeedbackDao;
+    private RatingAndFeedbackDao ratingsAndFeedbackDao;
 
     /**
      * Constructs a new RatingAndFeedbackService and initializes the
      * RatingAndFeedbackDao.
      */
     public RatingAndFeedbackService() {
-        this.ratingAndFeedbackDao = new RatingAndFeedbackDao();
+        this.ratingsAndFeedbackDao = new RatingAndFeedbackDao();
     }
 
     /**
@@ -54,7 +54,7 @@ public class RatingAndFeedbackService {
      * @param ratingAndFeedback the rating and feedback to be added
      */
     public void addRatingAndFeedback(RatingAndFeedback ratingAndFeedback) {
-        ratingAndFeedbackDao.addRatingAndFeedback(ratingAndFeedback);
+        ratingsAndFeedbackDao.addRatingAndFeedback(ratingAndFeedback);
     }
 
     /**
@@ -63,7 +63,7 @@ public class RatingAndFeedbackService {
      * @param ratingAndFeedback the rating and feedback to be updated
      */
     public void updateRatingAndFeedback(RatingAndFeedback ratingAndFeedback) {
-        ratingAndFeedbackDao.updateRatingAndFeedback(ratingAndFeedback);
+        ratingsAndFeedbackDao.updateRatingAndFeedback(ratingAndFeedback);
     }
 
     /**
@@ -72,7 +72,7 @@ public class RatingAndFeedbackService {
      * @param ratingID the ID of the rating and feedback to be deleted
      */
     public void deleteRatingAndFeedback(int ratingID) {
-        ratingAndFeedbackDao.deleteRatingAndFeedback(ratingID);
+        ratingsAndFeedbackDao.deleteRatingAndFeedback(ratingID);
     }
 
     /**
@@ -82,7 +82,7 @@ public class RatingAndFeedbackService {
      * @return the RatingAndFeedback object corresponding to the specified ID
      */
     public RatingAndFeedback getRatingAndFeedbackById(int ratingID) {
-        return ratingAndFeedbackDao.getRatingAndFeedbackById(ratingID);
+        return ratingsAndFeedbackDao.getRatingAndFeedbackById(ratingID);
     }
 
     /**
@@ -91,7 +91,7 @@ public class RatingAndFeedbackService {
      * @return a list of all RatingAndFeedback objects
      */
     public List<RatingAndFeedback> getAllRatingsAndFeedback() {
-        return ratingAndFeedbackDao.getAllRatingsAndFeedback();
+        return ratingsAndFeedbackDao.getAllRatingsAndFeedback();
     }
 
     /**
@@ -101,6 +101,6 @@ public class RatingAndFeedbackService {
      * @return a list of RatingAndFeedback objects associated with the user
      */
     public List<RatingAndFeedback> getAllRatingsAndFeedbackByUserId(int userId) {
-        return ratingAndFeedbackDao.getAllRatingsAndFeedbackByUserId(userId);
+        return ratingsAndFeedbackDao.getAllRatingsAndFeedbackByUserId(userId);
     }
 }
