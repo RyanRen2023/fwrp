@@ -7,34 +7,7 @@ import java.util.List;
 /**
  * Service class that handles operations related to ratings and feedback.
  *
- * <p>
- * This service provides methods for adding, updating, deleting, and retrieving
- * ratings and feedback. It interacts with the {@link RatingAndFeedbackDao} to
- * perform database operations.
- * </p>
- *
- * <p>
- * Example usage:
- * <pre>
- *     RatingAndFeedbackService feedbackService = new RatingAndFeedbackService();
- *     List&lt;RatingAndFeedback&gt; allFeedback = feedbackService.getAllRatingsAndFeedback();
- * </pre>
- * </p>
- *
- * <p>
- * Dependencies:
- * <ul>
- * <li>{@link RatingAndFeedbackDao}: Data access object for performing
- * operations on rating and feedback data.</li>
- * </ul>
- * </p>
- *
- * <p>
- * The class interacts with the {@link RatingAndFeedbackDao} to perform all
- * database operations related to ratings and feedback.
- * </p>
- *
- * @author Xihai Ren
+ * @author Sam Doiron
  */
 public class RatingAndFeedbackService {
 

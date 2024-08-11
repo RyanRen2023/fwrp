@@ -21,22 +21,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Servlet for handling feedback requests. This servlet processes both GET and
- * POST requests for submitting and viewing feedback.
- *
- * <p>
- * Depending on the user type (consumer, organization, or retailer), the servlet
- * forwards requests to the appropriate JSP page for rendering or handles
- * feedback submission.
- * </p>
- *
- * <p>
- * URL Patterns:
- * <ul>
- * <li>/feedback</li>
- * </ul>
- * </p>
- *
+ * Servlet for handling feedback requests. 
+ * 
  * @author Sam
  */
 @WebServlet(name = "FeedbackServlet", urlPatterns = {"/feedback"})

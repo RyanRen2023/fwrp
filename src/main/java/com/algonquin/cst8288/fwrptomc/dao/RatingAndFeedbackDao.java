@@ -20,7 +20,7 @@ import java.util.List;
  * Note: Ensure that the JDBCClient class is correctly implemented to provide a
  * valid database connection.
  *
- * Author: Xihai Ren
+ * Author: Sam Doiron
  */
 public class RatingAndFeedbackDao {
 
