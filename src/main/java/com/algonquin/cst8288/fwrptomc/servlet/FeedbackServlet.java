@@ -99,12 +99,12 @@ public class FeedbackServlet extends HttpServlet {
         if ("POST".equalsIgnoreCase(request.getMethod())) {
             int idForFood = Integer.parseInt(request.getParameter("foodItem"));
             int rating = Integer.parseInt(request.getParameter("rating"));
-            String comments = request.getParameter("comments");
+            String commentsAboutFood = request.getParameter("comments");
 
             RatingAndFeedback ratingsAndFeedback = new RatingAndFeedback();
             ratingsAndFeedback.setFoodID(idForFood);
             ratingsAndFeedback.setRating(rating);
-            ratingsAndFeedback.setReview(comments);
+            ratingsAndFeedback.setReview(commentsAboutFood);
             ratingsAndFeedback.setUserID(user.getUid());
             ratingsAndFeedback.setCreatedAt(LocalDateTime.now());
             feedbackService.addRatingAndFeedback(ratingsAndFeedback);
