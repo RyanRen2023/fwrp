@@ -61,14 +61,14 @@ public class RatingAndFeedbackDao {
     public void updateRatingAndFeedback(RatingAndFeedback ratingAndFeedback) {
         String sql = "UPDATE RatingAndFeedback SET UserID = ?, FoodID = ?, Rating = ?, Review = ?, CreatedAt = ? WHERE RatingID = ?";
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ratingAndFeedback.getUserID());
-            pstmt.setInt(2, ratingAndFeedback.getFoodID());
-            pstmt.setInt(3, ratingAndFeedback.getRating());
-            pstmt.setString(4, ratingAndFeedback.getReview());
-            pstmt.setTimestamp(5, Timestamp.valueOf(ratingAndFeedback.getCreatedAt()));
-            pstmt.setInt(6, ratingAndFeedback.getRatingID());
-            pstmt.executeUpdate();
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement update = conn.prepareStatement(sql)) {
+            update.setInt(1, ratingAndFeedback.getUserID());
+            update.setInt(2, ratingAndFeedback.getFoodID());
+            update.setInt(3, ratingAndFeedback.getRating());
+            update.setString(4, ratingAndFeedback.getReview());
+            update.setTimestamp(5, Timestamp.valueOf(ratingAndFeedback.getCreatedAt()));
+            update.setInt(6, ratingAndFeedback.getRatingID());
+            update.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -82,9 +82,9 @@ public class RatingAndFeedbackDao {
     public void deleteRatingAndFeedback(int ratingID) {
         String sql = "DELETE FROM RatingAndFeedback WHERE RatingID = ?";
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ratingID);
-            pstmt.executeUpdate();
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement del = conn.prepareStatement(sql)) {
+            del.setInt(1, ratingID);
+            del.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,9 +100,9 @@ public class RatingAndFeedbackDao {
         String sql = "SELECT * FROM RatingAndFeedback WHERE RatingID = ?";
         RatingAndFeedback ratingAndFeedback = null;
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ratingID);
-            ResultSet rs = pstmt.executeQuery();
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement getRating = conn.prepareStatement(sql)) {
+            getRating.setInt(1, ratingID);
+            ResultSet rs = getRating.executeQuery();
 
             if (rs.next()) {
                 ratingAndFeedback = new RatingAndFeedback();
@@ -157,7 +157,7 @@ public class RatingAndFeedbackDao {
         String sql = "SELECT * FROM RatingAndFeedback where userId = " + userId;
         List<RatingAndFeedback> ratingsAndFeedback = new ArrayList<>();
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement getall = conn.prepareStatement(sql); ResultSet rs = getall.executeQuery()) {
             while (rs.next()) {
                 RatingAndFeedback ratingAndFeedback = new RatingAndFeedback();
                 ratingAndFeedback.setRatingID(rs.getInt("RatingID"));
@@ -185,9 +185,9 @@ public class RatingAndFeedbackDao {
         String sql = "SELECT COUNT(*) AS total_feedback FROM RatingAndFeedback WHERE UserID = ?";
         int totalFeedback = 0;
 
-        try (Connection conn = jdbcClient.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
+        try (Connection conn = jdbcClient.getConnection(); PreparedStatement getTotal = conn.prepareStatement(sql)) {
+            getTotal.setInt(1, userId);
+            ResultSet rs = getTotal.executeQuery();
 
             if (rs.next()) {
                 totalFeedback = rs.getInt("total_feedback");
